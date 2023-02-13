@@ -1,9 +1,11 @@
 // Require statements:
 const express = require("express");
 const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
-// Invoke the express app module functionality
+// Invoke the express app module functionality:
 const app = express();
 
 // Import routes:
@@ -18,6 +20,8 @@ app.get('/', (req, res) => {
     res.status(200);
 })
 
+//Connect to db: 
+    // ? should this be in server.js instead?
 mongoose.set('strictQuery', true); // this and second param in .connect() below prevent deprecation warnings
 const mongoDBLocalURL = process.env.MONGODB_LOCAL_URL;
 mongoose.connect(
@@ -27,9 +31,12 @@ mongoose.connect(
         useUnifiedTopology: true
     },
     () => {
-        console.log('Connected to MongoDB:', mongoose.connection.name, 'on port', mongoose.connection.port); // -> check db connection is working
+        console.log('Connected to local MongoDB! Database:', mongoose.connection.name, 'on PORT', mongoose.connection.port); // -> check db connection is working
     }
 )
 
+// Middleware:
+app.use(bodyParser.json());
+app.use(cors());
 
 module.exports = { app }

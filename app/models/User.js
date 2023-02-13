@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-
 const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
-    
     userName: {
         type: String,
         required: true,
@@ -23,17 +21,15 @@ const userSchema = mongoose.Schema({
         unique: false,
     },
 },
-{
-    timestamps: true
-});
+    {
+        timestamps: true,
+        collecion: 'users'
+    });
 
 
-userSchema.methods.verifyPassword = function(password) {
-    console.log("password from User: " + password);
-    console.log("password from Database: " + this.password);
+userSchema.methods.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
-
 
 const User = mongoose.model("User", userSchema);
 

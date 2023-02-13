@@ -13,3 +13,6 @@
 
 - App loosely structured as above using placeholders. I'm going to start putting in auth functionality first, working from [this tutorial](https://medium.com/swlh/user-authentication-using-mern-stack-part-1-backend-cd4d193f15b1). Moved DB connection from `server.js` to `index.js`. Installed additional dependencies: body-parser, bcrypt, cors, jsonwebtoken.       
 
+13/02/23:       
+User model added, signup / signin functionality started but not tested. Passport requires implementing before testing can begin!        
+

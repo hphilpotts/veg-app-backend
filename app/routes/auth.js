@@ -1,6 +1,10 @@
 // * auth routes
 
-const router = require('express').Router();
+const express = require('express');
+const router =express.Router();
+
+router.use(express.json())
+
 const authCntrl = require('../controllers/auth')
 
 router.post('/auth/signup', authCntrl.auth_signup);

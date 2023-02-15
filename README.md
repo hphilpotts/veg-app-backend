@@ -16,3 +16,28 @@
 13/02/23:       
 User model added, signup / signin functionality started but not tested. Passport requires implementing before testing can begin!        
 
+14/02/23:       
+`auth/signup` and `auth/signin` tested working on in **Postman**. More sophisticated error handling required in `controllers/auth.js`: signup route only provides a single generic error message, signin only provides 'user not found', 'password not matched' and 'you are not logged in'.        
+
+15/02/23:       
+- _Had one of those moments where a sudden realisation from a problem days before comes out of the blue while off doing something else - the issues seen with **Jest** and_ `app.listen` _causing open handles can potentially avoided through avoiding calling_ `app.listen` _when running tests_.     
+- After a lot of playing about with `package.json "scripts"`, I have eventually come up with a solution like so:        
+
+```
+// server.js:
+const setPortAndListenEnabled = process.env.PORT_LISTEN;
+if (setPortAndListenEnabled) {
+    const PORT = process.env.PORT;
+    app.listen(PORT, () => console.log(`Hello-Express Application is running on port ${PORT}`));
+}
+```
+
+```
+// package.json:
+[...]
+  "scripts": {
+    "start": "PORT_LISTEN=enabled nodemon server.js",
+[...]
+```
+
+- _Potentially a hideous bodge - will see how it goes when I get to the next step: trying to set up **Jest** testing again...       

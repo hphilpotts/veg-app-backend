@@ -41,3 +41,5 @@ if (setPortAndListenEnabled) {
 ```
 
 - _Potentially a hideous bodge - will see how it goes when I get to the next step: trying to set up **Jest** testing again...       
+
+- Reinstalling `jest supertest cross-env`

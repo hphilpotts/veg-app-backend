@@ -13,7 +13,10 @@ const foodItemSchema = mongoose.Schema({
         type: String,
         enum: foodItemCategories,
         required: true
-    }
+    },
+    usersFavouritedBy: [{
+        type: mongoose.Types.ObjectId, ref: 'User'
+    }]
 
 })
 

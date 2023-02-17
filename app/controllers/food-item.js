@@ -40,7 +40,7 @@ exports.foodItem_create_post = async (req, res) => {
 exports.foodItem_index_get = (req, res) => {
     FoodItem.find()
         .then(foodItems => {
-            res.json({ foodItems })
+            res.json({ foodItems }).status(200)
         })
         .catch(err => {
             console.error(err);
@@ -56,6 +56,28 @@ exports.foodItem_detail_get = (req, res) => {
         .catch(err => {
             console.error(err);
             res.json({ "message": "Error finding food by name, please try again later." }).status(400)
+        })
+}
+
+exports.foodItem_byUser_get = (req, res) => {
+    FoodItem.find({ userAddedBy: req.body.userAddedBy })
+        .then(usersItems => {
+            res.json({ usersItems }).status(200)
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error finding food added by a specific user, please try again later" }).status(400)
+        })
+}
+
+exports.foodItem_favourites_get = (req, res) => {
+    FoodItem.find({ usersFavouritedBy: req.body.usersFavouritedBy })
+        .then(usersFavourites => {
+            res.json({ usersFavourites }).status(200)
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error finding a user's favourite foods, please try again later" }).status(400)
         })
 }
 

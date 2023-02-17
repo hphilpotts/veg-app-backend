@@ -83,4 +83,15 @@ exports.foodItem_favourites_get = (req, res) => {
 
 // U
 
+exports.foodItem_edit_post = (req, res) => {
+    FoodItem.findByIdAndUpdate(req.body.id, req.body)
+    .then(() => {
+        res.json({ "message": "Food item updated successfully!"}).status(200)
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ "message": "Error updating food item, please try again later."}).status(400)
+    })
+}
+
 // D

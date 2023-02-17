@@ -1,3 +1,4 @@
+// ! abstracting out creation of JWT: not yet implemented
 const jwt = require("jsonwebtoken");
 exports.createJWT = (email, userId, duration) => {
    const payload = {

@@ -40,6 +40,7 @@ if (setPortAndListenEnabled) {
 [...]
 ```
 
-- _Potentially a hideous bodge - will see how it goes when I get to the next step: trying to set up **Jest** testing again...       
+- _Potentially a hideous bodge - will see how it goes when I get to the next step: trying to set up **Jest** testing again_...       
 
-- Reinstalling `jest supertest cross-env`
+17/02/23:       
+- After reading **lots** more guides, tutorials (often conflicting or of varying quality) and documentation, I have come to realise that the line of testing I was pursuing was largely pointless: effectively testing Mongoose rather than any of my source code. I have instead decided to handle the very core `server.js` and `index.js` hosting and database connection errors through the console.        

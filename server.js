@@ -2,10 +2,11 @@
 
 const { app } = require("./app");
 
-// Configue PORT - enabled when `npm start` is run, will not run otherwise.
-// Aim here is to allow Jest to test correctly - otherwise open handle issue occurs when app.listen is called.
-const setPortAndListenEnabled = process.env.PORT_LISTEN;
-if (setPortAndListenEnabled) {
-    const PORT = process.env.PORT;
-    app.listen(PORT, () => console.log(`Hello-Express Application is running on port ${PORT}`));
-}
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    try {
+        console.log(`Hello-Express Application is running on port ${PORT}`)
+    } catch (error) {
+        console.error(error);
+    }
+});

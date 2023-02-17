@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const makeLocalMongoDBConnection = require('./utils/localmongodbconnect');
+const databaseConnection = require('./utils/localmongodbconnect');
 
 // Invoke the express app module functionality:
 const app = express();
@@ -19,8 +19,9 @@ app.get('/', (req, res) => {
     res.status(200);
 })
 
-//Connect to db: 
-makeLocalMongoDBConnection();
+//Connect to db and check status: 
+databaseConnection.makeLocalDBConnection();
+databaseConnection.checkDBConnectionStatus();
 
 // Middleware:
 app.use(bodyParser.json());

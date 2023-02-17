@@ -39,13 +39,24 @@ exports.foodItem_create_post = async (req, res) => {
 // R
 exports.foodItem_index_get = (req, res) => {
     FoodItem.find()
-    .then(foodItems => {
-        res.json({ foodItems })
-    })
-    .catch(err => {
-        console.error(err);
-        res.json({"message": "Error getting food items, please try again later"}).status(400)
-    })
+        .then(foodItems => {
+            res.json({ foodItems })
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error getting food items, please try again later." }).status(400)
+        })
+}
+
+exports.foodItem_detail_get = (req, res) => {
+    FoodItem.findById(req.body.id)
+        .then(foundItem => {
+            res.json({ foundItem }).status(200)
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error finding food by name, please try again later." }).status(400)
+        })
 }
 
 // U

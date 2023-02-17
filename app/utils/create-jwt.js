@@ -1,12 +1,22 @@
 // ! abstracting out creation of JWT: not yet implemented
 const jwt = require("jsonwebtoken");
-exports.createJWT = (email, userId, duration) => {
+exports.createJWT = (userForPayload) => {
+
    const payload = {
-      email,
-      userId,
-      duration
-   };
-   return jwt.sign(payload, process.env.TOKEN_SECRET, {
-     expiresIn: duration,
-   });
+      user: {
+         id: userForPayload._id,
+         username: userForPayload.userName
+      }
+   }
+
+   jwt.sign(
+      payload,
+      process.env.SECRET,
+      { expiresIn: '3 days' },
+      (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+      }
+   )
+
 };

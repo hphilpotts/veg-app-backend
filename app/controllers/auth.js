@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const jwt = require('jsonwebtoken');
+const jwtUtilty = require('../utils/create-jwt')
 const bcrypt = require('bcrypt');
 const salt = 10;
 
@@ -42,23 +42,7 @@ exports.auth_signup = async (req, res) => {
                 res.json({ "message": "error creating user, try again!" }) // ? more specific error message/error handling here ?
             })
 
-        // TODO - abstract out token creation
-        const payload = {
-            user: {
-                id: user._id,
-                username: user.userName
-            }
-        };
-
-        jwt.sign(
-            payload,
-            process.env.SECRET,
-            { expiresIn: '3 days' },
-            (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-            }
-        );
+        jwtUtilty.createJWT(user);
 
     } catch (err) {
         console.error(err.message);
@@ -79,21 +63,8 @@ exports.auth_signin = async (req, res) => {
             return res.json({ "message": "Password does not match user" }).status(400)
         }
 
-        const payload = {
-            user: {
-                id: user._id,
-                username: user.userName
-            }
-        }
-        jwt.sign(
-            payload,
-            process.env.SECRET,
-            { expiresIn: '3 days' },
-            (err, token) => {
-                if (err) throw err;
-                res.json({ token }).status(200)
-            }
-        )
+        jwtUtilty.createJWT(user);
+
     }
     catch (error) {
         res.json({ "message": "you are not logged in!" }).status(400); // ? more specific error here ?

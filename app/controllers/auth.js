@@ -24,18 +24,18 @@ exports.auth_signup = async (req, res) => {
             return res.status(400).json({ "message": 'Password should be 6 characters or longer' })
         }
 
-        user = new User({
+        const user = new User({
             userName,
             emailAddress,
             password,
         });
 
-        let hashedPassword = bcrypt.hashSync(req.body.password, salt);
+        const hashedPassword = bcrypt.hashSync(req.body.password, salt);
         user.password = hashedPassword;
 
         await user.save()
             .then(() => {
-                res.json({ "message": "User created sucessfully!" })
+                res.json({ "message": "User created sucessfully!" }).status(201)
             })
             .catch((err) => {
                 console.log(err);
@@ -52,9 +52,9 @@ exports.auth_signup = async (req, res) => {
 }
 
 exports.auth_signin = async (req, res) => {
-    let { emailAddress, password } = req.body;
+    const { emailAddress, password } = req.body;
     try {
-        let user = await User.findOne({ emailAddress });
+        const user = await User.findOne({ emailAddress });
         if (!user) {
             return res.json({ "message": "User not found" }).status(400)
         }

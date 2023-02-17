@@ -47,3 +47,4 @@ if (setPortAndListenEnabled) {
 
 - Updated `controllers/auth.js` to better handle errors and provide a `jwt` upon signup as well as on login. [This tutorial](https://dev.to/jeffreythecoder/setup-jwt-authentication-in-mern-from-scratch-ib4) was clear and helpful! Tested in **Postman**. Authorisation middleware added ready for use.    
 
+- Implementing 'add food item' functionality: model created, create food item controller added

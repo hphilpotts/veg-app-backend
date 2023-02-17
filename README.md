@@ -44,3 +44,6 @@ if (setPortAndListenEnabled) {
 
 17/02/23:       
 - After reading **lots** more guides, tutorials (often conflicting or of varying quality) and documentation, I have come to realise that the line of testing I was pursuing was largely pointless: effectively testing Mongoose rather than any of my source code. I have instead decided to handle the very core `server.js` and `index.js` hosting and database connection errors through the console.        
+
+- Updated `controllers/auth.js` to better handle errors and provide a `jwt` upon signup as well as on login. [This tutorial](https://dev.to/jeffreythecoder/setup-jwt-authentication-in-mern-from-scratch-ib4) was clear and helpful! Tested in **Postman**. Authorisation middleware added ready for use.    
+

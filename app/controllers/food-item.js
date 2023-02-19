@@ -96,7 +96,7 @@ exports.foodItem_edit_post = (req, res) => {
 exports.foodItem_updateFavourites_post = async (req, res) => {
 
     const { id, user } = req.body;
-    
+
     try {
         const foundItem = await FoodItem.findById(id);
 
@@ -104,20 +104,20 @@ exports.foodItem_updateFavourites_post = async (req, res) => {
             try {
                 foundItem.usersFavouritedBy.pull(user);
                 foundItem.save();
-                res.json({ "message": "User has unfavourited this item" }).status(200);
+                res.json({ "message": "User has unfavourited this item." }).status(200);
             } catch (err) {
                 console.error(err);
-                res.json({ "message": "Error removing item from favourites" }).status(400);
+                res.json({ "message": "Error removing item from favourites." }).status(400);
             }
 
         } else {
             try {
                 foundItem.usersFavouritedBy.addToSet(user)
                 foundItem.save()
-                res.json({ "message": "User has favourited this item" }).status(200)
+                res.json({ "message": "User has favourited this item!" }).status(200)
             } catch (err) {
                 console.error(err);
-                res.json({ "message": "Error adding item to favourites" }).status(400)
+                res.json({ "message": "Error adding item to favourites." }).status(400)
             }
         }
 
@@ -128,4 +128,12 @@ exports.foodItem_updateFavourites_post = async (req, res) => {
 
 }
 
-// D
+exports.foodItem_deleteById = async (req, res) => {
+    try {
+        await FoodItem.findByIdAndDelete(req.body.id);
+        res.json({ "message": "Food item successfully deleted." }).status(200)
+    } catch (err) {
+        console.error(err);
+        res.json({ "message": "Error deleting item." }).status(400)
+    }
+}

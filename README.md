@@ -56,4 +56,4 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
   [...]
 ```
 19/02/23:   
-- Updated `foodItem_updateFavourites_post` with simpler syntax and error handling, now working ok - tested in Postman.    
+- Updated `foodItem_updateFavourites_post` with simpler syntax and error handling, now working ok - tested in Postman. Delete route implemented and tested ok.    

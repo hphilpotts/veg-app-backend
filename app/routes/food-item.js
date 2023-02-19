@@ -16,4 +16,6 @@ router.get('/foodItem/favourites', foodItemController.foodItem_favourites_get);
 router.post('/foodItem/edit', foodItemController.foodItem_edit_post);
 router.post('/foodItem/favourite', foodItemController.foodItem_updateFavourites_post);
 
+router.delete('/foodItem/delete', foodItemController.foodItem_deleteById);
+
 module.exports = router;

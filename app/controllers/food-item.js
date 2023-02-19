@@ -36,7 +36,6 @@ exports.foodItem_create_post = async (req, res) => {
 
 }
 
-// R
 exports.foodItem_index_get = (req, res) => {
     FoodItem.find()
         .then(foodItems => {
@@ -85,13 +84,48 @@ exports.foodItem_favourites_get = (req, res) => {
 
 exports.foodItem_edit_post = (req, res) => {
     FoodItem.findByIdAndUpdate(req.body.id, req.body)
-    .then(() => {
-        res.json({ "message": "Food item updated successfully!"}).status(200)
-    })
-    .catch(err => {
+        .then(() => {
+            res.json({ "message": "Food item updated successfully!" }).status(200)
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error updating food item, please try again later." }).status(400)
+        })
+}
+
+exports.foodItem_updateFavourites_post = async (req, res) => {
+
+    const { id, user } = req.body;
+    
+    try {
+        const foundItem = await FoodItem.findById(id);
+
+        if (foundItem.usersFavouritedBy.includes(user)) {
+            try {
+                foundItem.usersFavouritedBy.pull(user);
+                foundItem.save();
+                res.json({ "message": "User has unfavourited this item" }).status(200);
+            } catch (err) {
+                console.error(err);
+                res.json({ "message": "Error removing item from favourites" }).status(400);
+            }
+
+        } else {
+            try {
+                foundItem.usersFavouritedBy.addToSet(user)
+                foundItem.save()
+                res.json({ "message": "User has favourited this item" }).status(200)
+            } catch (err) {
+                console.error(err);
+                res.json({ "message": "Error adding item to favourites" }).status(400)
+            }
+        }
+
+    } catch (err) {
         console.error(err);
-        res.json({ "message": "Error updating food item, please try again later."}).status(400)
-    })
+        res.status(500).send('server error')
+    }
+
 }
 
 // D

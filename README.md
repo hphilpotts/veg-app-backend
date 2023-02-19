@@ -47,4 +47,13 @@ if (setPortAndListenEnabled) {
 
 - Updated `controllers/auth.js` to better handle errors and provide a `jwt` upon signup as well as on login. [This tutorial](https://dev.to/jeffreythecoder/setup-jwt-authentication-in-mern-from-scratch-ib4) was clear and helpful! Tested in **Postman**. Authorisation middleware added ready for use.    
 
-- Implementing 'add food item' functionality: model created, create food item controller added, route implemented. Tested working ok in **Postman**. Now moving on to Read, Update, Delete.
+- Implementing 'add food item' functionality: model created, create food item controller added, route implemented. Tested working ok in **Postman**. Now moving on to Read, Update, Delete.   
+- Hit an issue with `foodItem_updateFavourites_post` where route only works on alternate `send`s through Postman, each second request crashes the app:   
+```
+TypeError: foundItem.usersFavouritedBy.pull(...).then is not a function
+  [...]
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+  [...]
+```
+19/02/23:   
+- Updated `foodItem_updateFavourites_post` with simpler syntax and error handling, now working ok - tested in Postman.    

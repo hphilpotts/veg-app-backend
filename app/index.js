@@ -10,10 +10,12 @@ const app = express();
 // Import routes:
 const authRouter = require('./routes/auth');
 const foodItemRouter = require('./routes/food-item');
+const weekRouter = require('./routes/week');
 
 // Mount router:
 app.use('/', authRouter);
 app.use('/', foodItemRouter);
+app.use('/', weekRouter);
 
 // Root route test:
 app.get('/', (req, res) => {

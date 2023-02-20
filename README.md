@@ -1,4 +1,6 @@
-# Veg App Backend       
+# Veg App Backend      
+
+## Initial Setup:   
 
 11/02/23:       
 - Repos set up, Node.js initialised. ExpressJS, Mongoose, Axios and Dotenv installed. Basic repository structure templated with placeholders.          
@@ -12,6 +14,8 @@
 - I'm basing my structure on the three-layer app structure detailed [here](https://blog.treblle.com/egergr/) - again, the server/app split is proposed by the author (albeit with `app.js` renamed to `index.js` and placed in an `app/` folder).       
 
 - App loosely structured as above using placeholders. I'm going to start putting in auth functionality first, working from [this tutorial](https://medium.com/swlh/user-authentication-using-mern-stack-part-1-backend-cd4d193f15b1). Moved DB connection from `server.js` to `index.js`. Installed additional dependencies: body-parser, bcrypt, cors, jsonwebtoken.       
+
+## Basic auth functionality, testing issues:    
 
 13/02/23:       
 User model added, signup / signin functionality started but not tested. Passport requires implementing before testing can begin!        
@@ -47,6 +51,8 @@ if (setPortAndListenEnabled) {
 
 - Updated `controllers/auth.js` to better handle errors and provide a `jwt` upon signup as well as on login. [This tutorial](https://dev.to/jeffreythecoder/setup-jwt-authentication-in-mern-from-scratch-ib4) was clear and helpful! Tested in **Postman**. Authorisation middleware added ready for use.    
 
+## Food Item functionality:   
+
 - Implementing 'add food item' functionality: model created, create food item controller added, route implemented. Tested working ok in **Postman**. Now moving on to Read, Update, Delete.   
 - Hit an issue with `foodItem_updateFavourites_post` where route only works on alternate `send`s through Postman, each second request crashes the app:   
 ```
@@ -58,14 +64,30 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
 19/02/23:   
 - Updated `foodItem_updateFavourites_post` with simpler syntax and error handling, now working ok - tested in Postman. Delete route implemented and tested ok.    
 
+## Sign out, re-testing, JWT issue:    
+
 20/02/23:   
-Looking at sign out functionality: [this article](https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6) makes for an interesting read with regards to sign out on JWT and invalidating tokens on request. I've made the call to:   
-- Reduce `expiresIn` time in `create-jwt.js` to 1 day.    
-- Handle logout in the fronend through deleting tokens from client-side storage.    
-- Put a 'token blacklist' feature in **Future features to implement** for later implementation.   
+- Looking at sign out functionality: [this article](https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6) makes for an interesting read with regards to sign out on JWT and invalidating tokens on request. I've made the call to:   
+  - Reduce `expiresIn` time in `create-jwt.js` to 1 day.    
+  - Handle logout in the fronend through deleting tokens from client-side storage.    
+  - Put a 'token blacklist' feature in **Future features to implement** for later implementation.   
 My thinking here is that at this stage in the project there is not sufficent requirement for the addional step of invalidating tokesn prior to their expiry: in short, my efforts would be better spend elsewhere!    
 
+- Competed general formatting and cleanup across all source code.   
+- Now re-testing all routes implemented so far in Postman.
+
 - Issue seen where `jwt.sign` abstracted out from auth controller: token not being sent as response, I have not (after a fair bit of playing around) been able to get a token to return either. I've reversed the abstraction of JWT `payload` creation / `jwt.sign` and implemented them back into `controllers/auth.js`. _Feels like a compromise but I'm trying to strike a balance between making progress and setting realistic goals in relation to my time and ability._   
+
+## Week functionality:    
+
+- I'm now looking at implementing "Week" functionality: this model will hold a user's data for a given week. _I've had to lend this a fair amount of thought:_    
+  - Given I wish to track both daily and weekly totals, I have decided to store a `document` for each week, and store days within that.   
+  - I have decided to use a new document for each user.   
+  - Daily totals are stored within an object, using keys `0...6`: Sunday-Saturday respectivel as per `Date.prototype.getDay()`.   
+  - Week commencing is tracked to establish if a record already exists for that week (ensuring duplicated are not created in error!).   
+  - Weekly totals are extrapolated from daily entries (total unique items).   
+
+- `Week` model added, `services/handle-current-day.js` added.   
 
 ## Current issues to resolve:   
 

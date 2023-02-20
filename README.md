@@ -57,3 +57,15 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
 ```
 19/02/23:   
 - Updated `foodItem_updateFavourites_post` with simpler syntax and error handling, now working ok - tested in Postman. Delete route implemented and tested ok.    
+
+20/02/23:   
+Looking at sign out functionality: [this article](https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6) makes for an interesting read with regards to sign out on JWT and invalidating tokens on request. I've made the call to:   
+- Reduce `expiresIn` time in `create-jwt.js` to 1 day.    
+- Handle logout in the fronend through deleting tokens from client-side storage.    
+- Put a 'token blacklist' feature in **Future features to implement** for later implementation.   
+My thinking here is that at this stage in the project there is not sufficent requirement for the addional step of invalidating tokesn prior to their expiry: in short, my efforts would be better spend elsewhere!    
+
+## Issues to resolve:
+
+## Future features to implement:
+- 'Blacklisting' of tokens which required invalidation prior to their expiration time.    

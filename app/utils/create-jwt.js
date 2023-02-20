@@ -12,7 +12,7 @@ exports.createJWT = (userForPayload) => {
    jwt.sign(
       payload,
       process.env.SECRET,
-      { expiresIn: '3 days' },
+      { expiresIn: '1d' },
       (err, token) => {
           if (err) throw err;
           res.json({ token });

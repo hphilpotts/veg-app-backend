@@ -65,7 +65,16 @@ Looking at sign out functionality: [this article](https://medium.com/devgorilla/
 - Put a 'token blacklist' feature in **Future features to implement** for later implementation.   
 My thinking here is that at this stage in the project there is not sufficent requirement for the addional step of invalidating tokesn prior to their expiry: in short, my efforts would be better spend elsewhere!    
 
-## Issues to resolve:
+- Issue seen where `jwt.sign` abstracted out from auth controller: token not being sent as response, I have not (after a fair bit of playing around) been able to get a token to return either. I've reversed the abstraction of JWT `payload` creation / `jwt.sign` and implemented them back into `controllers/auth.js`. _Feels like a compromise but I'm trying to strike a balance between making progress and setting realistic goals in relation to my time and ability._   
+
+## Current issues to resolve:   
 
 ## Future features to implement:
 - 'Blacklisting' of tokens which required invalidation prior to their expiration time.    
+
+## Known unknowns:
+- Issues seen when `createJWT` (specifically `jwt.sign`) abstracted out into `utils/` from `controllers/auth.js`:
+  - `res.json({ token })` is not sending from within `utils/create-jwt.js` when imported into auth controller for obvious reasons.    
+  - I am unable to instead return `token` from within this and save into / send from `controllers/auth.js`: issue seems to lie as per [this stackoverflow](https://stackoverflow.com/questions/55748325/trying-to-sign-a-jwt-returns-undefined) with "trying to return from a callback" - possibly relating to [this other stackoverflow](https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function#:~:text=There's%20no%20place%20for%20returned,attention%20to%20the%20return%20value.&text=Yes%2C%20it%20makes%20fun%20sense,Unfortunately%2C%20it%20is%20not%20possible.) wherein "you cannot return from an asynchronous call inside a synchronous method".   
+  - _Clearly a gap in my understanding here!_ One to pick up and go over in detail until I can understand what was going wrong.   
+

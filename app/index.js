@@ -17,7 +17,7 @@ app.use('/', foodItemRouter);
 
 // Root route test:
 app.get('/', (req, res) => {
-    res.json({ "response": "This is the root" })
+    res.json({ "response": "This is the root" });
     res.status(200);
 })
 
@@ -30,4 +30,4 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Export for use in server.js
-module.exports = { app }
+module.exports = { app };

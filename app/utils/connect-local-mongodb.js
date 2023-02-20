@@ -1,5 +1,5 @@
 // Local MongoDB connection separated out into its own file in order to absract details 
-const mongoose = require('mongoose');   
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const makeLocalDBConnection = () => {
@@ -23,21 +23,21 @@ const makeLocalDBConnection = () => {
 
 const checkDBConnectionStatus = () => {
     mongoose.connection.on('connected', function () {
-        console.log('Mongoose default connection open!')
+        console.log('Mongoose default connection open!');
     })
-    mongoose.connection.on('error', function(err) {
-        console.error('Mongoose default connection error:', err)
+    mongoose.connection.on('error', function (err) {
+        console.error('Mongoose default connection error:', err);
     })
     mongoose.connection.on('disconnected', function () {
-        console.warn('\nMongoose default connection disconnected!')
+        console.warn('\nMongoose default connection disconnected!');
     })
 }
 
-process.on('SIGINT', function() {  
-    mongoose.connection.close(function () { 
-      console.log('Mongoose default connection disconnected through app termination'); 
-      process.exit(0); 
-    }); 
-  }); 
+process.on('SIGINT', function () {
+    mongoose.connection.close(function () {
+        console.log('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
 
 module.exports = { makeLocalDBConnection, checkDBConnectionStatus };

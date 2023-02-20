@@ -5,7 +5,7 @@ const { app } = require("./app");
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     try {
-        console.log(`Hello-Express Application is running on port ${PORT}`)
+        console.log(`Hello-Express Application is running on port ${PORT}`);
     } catch (error) {
         console.error(error);
     }

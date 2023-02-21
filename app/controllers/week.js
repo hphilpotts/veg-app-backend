@@ -1,10 +1,18 @@
-const Week = require('../models/Week');
+const Week = require('../models/TestWeek'); // ! TESTING ONLY - revert to '../models/Week'
 const handleCurrent = require('../services/handle-current-day')
+
+// TODO : revert once testing completed
+
+    // ! commented out for testing only:
+    // const weekCommencing = handleCurrent.getFirstDayOfCurrentWeek();
+    const currentDay = handleCurrent.getCurrentDayOfTheWeek();
+    // ! TESTING ONLY - sets to current time instead of midnight Sunday of current week:
+    const weekCommencing = new Date(); 
+
 
 // CREATE
 exports.week_create_post = async (req, res) => {
     const { userOwner } = req.body;
-    const weekCommencing = handleCurrent.getFirstDayOfCurrentWeek();
 
     try {
 
@@ -37,30 +45,64 @@ exports.week_create_post = async (req, res) => {
 // READ
 exports.week_indexByUser_get = async (req, res) => {
     const { userOwner } = req.body;
-    Week.find({ userOwner }).sort('-dateCreated')
+    Week.find({ userOwner }).sort('-weekCommencing')
     .then(Weeks => {
         res.json({ Weeks }).status(200);
     })
     .catch(err => {
         console.error(err);
-        res.json({ "message": "Error getting food items, please try again later." }).status(400);
-    })
+        res.json({ "message": "Error getting all weeks, please try again later." }).status(400);
+    });
 }
 
 exports.week_currentWeek_get = (req, res) => {
-
+    const { userOwner, weekCommencing } = req.body;
+    Week.findOne({ userOwner, weekCommencing })
+    .then( Week => {
+        res.json({ Week }).status(200);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ "message": "Error getting current week, please try again later."}).status(400);
+    });
 }
 
 exports.week_currentDay_get = (req, res) => {
-
+    const { userOwner, weekCommencing } = req.body;
+    Week.findOne({ userOwner, weekCommencing })
+    .then( Week => {
+        const entriesFromToday = Week[`${currentDay}`];
+        res.json({ entriesFromToday }).status(200);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ "message": "Error getting today's entries, please try again later."}).status(400);
+    });
 }
 
-exports.week_detailById_get = (req, ref) => {
-
+exports.week_detailById_get = (req, res) => {
+    const { id } = req.body;
+    Week.findById(id)
+    .then( Week => {
+        res.json({ Week }).status(200);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ "message": "Error getting week by id, please try again later."}).status(400);
+    });
 }
 
-exports.week_dailyDetailById_get = (req, ref) => {
-
+exports.week_dailyDetailById_get = (req, res) => {
+    const { id, day } = req.body;
+    Week.findById(id)
+    .then( Week => {
+        const dayDetail = Week[day];
+        res.json({ dayDetail }).status(200);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ "message": "Error getting day by id, please try again later."}).status(400);
+    });
 }
 
 // UPDATE

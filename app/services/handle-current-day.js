@@ -7,8 +7,8 @@ exports.getFirstDayOfCurrentWeek = () => {
 }
 
 exports.getCurrentDayOfTheWeek = () => {
-    const currentDate = new Date(today.setDate());
+    const currentDate = new Date();
     const todayAsNumber = currentDate.getDay();
-    return todayAsNumber;
+    return todayAsNumber.toString();
 }
 

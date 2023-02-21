@@ -35,8 +35,16 @@ exports.week_create_post = async (req, res) => {
 }
 
 // READ
-exports.week_indexByUser_get = (req, res) => {
-
+exports.week_indexByUser_get = async (req, res) => {
+    const { userOwner } = req.body;
+    Week.find({ userOwner }).sort('-dateCreated')
+    .then(Weeks => {
+        res.json({ Weeks }).status(200);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ "message": "Error getting food items, please try again later." }).status(400);
+    })
 }
 
 exports.week_currentWeek_get = (req, res) => {

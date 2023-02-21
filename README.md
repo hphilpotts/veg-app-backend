@@ -87,9 +87,16 @@ My thinking here is that at this stage in the project there is not sufficent req
   - Week commencing is tracked to establish if a record already exists for that week (ensuring duplicated are not created in error!).   
   - Weekly totals are extrapolated from daily entries (total unique items).   
 
-- `Week` model added, `services/handle-current-day.js` added.   
+- `Week` model added, `services/handle-current-day.js` added. CREATE Week functionality added, tested working ok in Postman.    
+
+21/02/23:   
+- Starting work on Week READ routes. _I've initially realised that testing these routes through Postman with the Week model in its current state is going to be a problem:_ the `exisitngWeek` check in CREATE currently limits my testing pool of 1 document per user (until Sunday that is!).   
+- As such I am going to create a new branch where I will implement `TestWeek` models to mock the functionality of `Week` models, without the 1/week restriction. From this I will implement and test the remaining READ, UPDATE, DELETE routes for `Week`.    
+ 
 
 ## Current issues to resolve:   
+- Daily entries into Week model are not typed as `ObjectId`.    
+- Authorisation not yet implemented.    
 
 ## Future features to implement:
 - 'Blacklisting' of tokens which required invalidation prior to their expiration time.    

@@ -93,9 +93,13 @@ My thinking here is that at this stage in the project there is not sufficent req
 - Starting work on Week READ routes. _I've initially realised that testing these routes through Postman with the Week model in its current state is going to be a problem:_ the `exisitngWeek` check in CREATE currently limits my testing pool of 1 document per user (until Sunday that is!).   
 - As such I am going to create a new branch where I will implement `TestWeek` models to mock the functionality of `Week` models, without the 1/week restriction. From this I will implement and test the remaining READ, UPDATE, DELETE routes for `Week`.    
 
-- READ Week routes implemented and tested working ok in Postman using `TestWeek` model in place of `Week`.
+- READ Week routes implemented and tested working ok in Postman using `TestWeek` model in place of `Week`.    
+
+22/02/23:   
+- UPDATE & DELETE Week routes implemented and tested working ok in Postman using `TestWeek` model.
 
 ## Current issues to resolve:   
+- `week` and `food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
 - Daily entries into Week model are not typed as `ObjectId`.    
 - Authorisation not yet implemented.    
 

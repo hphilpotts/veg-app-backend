@@ -128,14 +128,50 @@ exports.week_updateEntries_post = async (req, res) => {
 
 // DELETE
 
-exports.week_deleteAll = (req, res) => {
-
+exports.week_deleteAll = async (req, res) => {
+    try {
+        await Week.findByIdAndDelete(req.body.id);
+        res.json({ "message": "Week successfully deleted." }).status(200);
+    } catch (err) {
+        console.error(err);
+        res.json({ "message": "Error deleting week." }).status(400);
+    }
 }
 
-exports.week_deleteDay = (req, res) => {
-
+exports.week_deleteDay = async (req, res) => {
+    const { id, dayOfWeek } = req.body;
+    try {
+        Week.findById(id)
+        .then( Week => {
+            Week[dayOfWeek] = [];
+            Week.save();
+            res.json({ "message": "Day successfully deleted from week." }).status(200);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error deleting day from week." }).status(400);
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 }
 
 exports.week_deleteEntry = (req, res) => {
-
+    const { id, dayOfWeek, foodItem } = req.body;
+    try {
+        Week.findById(id)
+        .then( Week => {
+            Week[dayOfWeek].pull(foodItem);
+            Week.save();
+            res.json({ "message": "Food item successfully deleted from day's entries." }).status(200);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error deleting food item from day's entries." }).status(400);
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 }

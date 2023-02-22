@@ -96,7 +96,8 @@ My thinking here is that at this stage in the project there is not sufficent req
 - READ Week routes implemented and tested working ok in Postman using `TestWeek` model in place of `Week`.    
 
 22/02/23:   
-- UPDATE & DELETE Week routes implemented and tested working ok in Postman using `TestWeek` model.
+- UPDATE & DELETE Week routes implemented and tested working ok in Postman using `TestWeek` model.    
+- `TestWeek` and associated imports, changes removed from `main` branch.    
 
 ## Current issues to resolve:   
 - `week` and `food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    

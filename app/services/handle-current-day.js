@@ -12,3 +12,9 @@ exports.getCurrentDayOfTheWeek = () => {
     return todayAsNumber.toString();
 }
 
+exports.getWeekCommencingFromDate = dateInput => {
+    const weekCommencingRaw = new Date(dateInput.setDate(dateInput.getDate() - dateInput.getDay()));
+    const weekCommencingAtZeroHundred = new Date(weekCommencingRaw.setHours(0, 0, 0, 0));
+    return weekCommencingAtZeroHundred;
+}
+

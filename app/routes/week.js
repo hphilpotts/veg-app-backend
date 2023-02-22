@@ -16,7 +16,7 @@ router.get('/week/detail', weekController.week_detailById_get);
 router.get('/week/dailyDetail', weekController.week_dailyDetailById_get);
 
 // U
-router.post('/week/update', weekController.week_updateEntry_post);
+router.post('/week/update', weekController.week_updateEntries_post);
 
 // D
 router.delete('/week/deleteAll', weekController.week_deleteAll);

@@ -106,8 +106,24 @@ exports.week_dailyDetailById_get = (req, res) => {
 }
 
 // UPDATE
-exports.week_updateEntry_post = (req, res) => {
+exports.week_updateEntries_post = async (req, res) => {
+    const { id, dayOfWeek, foodItem } = req.body;
+    try {
+        Week.findById(id)
+        .then( Week => {
+            Week[dayOfWeek].addToSet(foodItem);
+            Week.save()
+            res.json({ "message": "New item added successfully! Selected week updated." }).status(201);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Unable to add item and update week - please try again later." }).status(400);
+        })
 
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 }
 
 // DELETE

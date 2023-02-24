@@ -74,8 +74,8 @@ exports.week_currentDay_get = (req, res) => {
 }
 
 exports.week_detailById_get = (req, res) => {
-    const { id } = req.body;
-    Week.findById(id)
+    const { id, userOwner } = req.body;
+    Week.findOne({id, userOwner})
         .then(Week => {
             res.json({ Week }).status(200);
         })
@@ -86,8 +86,8 @@ exports.week_detailById_get = (req, res) => {
 }
 
 exports.week_dailyDetailById_get = (req, res) => {
-    const { id, day } = req.body;
-    Week.findById(id)
+    const { id, day, userOwner } = req.body;
+    Week.findOne({id, userOwner})
         .then(Week => {
             const dayDetail = Week[day];
             res.json({ dayDetail }).status(200);
@@ -99,9 +99,9 @@ exports.week_dailyDetailById_get = (req, res) => {
 }
 
 exports.week_updateEntries_post = async (req, res) => {
-    const { id, dayOfWeek, foodItem } = req.body;
+    const { id, dayOfWeek, foodItem, userOwner } = req.body;
     try {
-        Week.findById(id)
+        Week.findOne({ id, userOwner })
             .then(Week => {
                 Week[dayOfWeek].addToSet(foodItem);
                 Week.save();
@@ -119,8 +119,9 @@ exports.week_updateEntries_post = async (req, res) => {
 }
 
 exports.week_deleteAll = async (req, res) => {
+    const { id, userOwner } = req.body;
     try {
-        await Week.findByIdAndDelete(req.body.id);
+        await Week.findOne({ id, userOwner }).deleteOne();
         res.json({ "message": "Week successfully deleted." }).status(200);
     } catch (err) {
         console.error(err);
@@ -129,9 +130,9 @@ exports.week_deleteAll = async (req, res) => {
 }
 
 exports.week_deleteDay = async (req, res) => {
-    const { id, dayOfWeek } = req.body;
+    const { id, dayOfWeek, userOwner } = req.body;
     try {
-        Week.findById(id)
+        Week.findOne({ id, userOwner })
             .then(Week => {
                 Week[dayOfWeek] = [];
                 Week.save();
@@ -148,9 +149,9 @@ exports.week_deleteDay = async (req, res) => {
 }
 
 exports.week_deleteEntry = (req, res) => {
-    const { id, dayOfWeek, foodItem } = req.body;
+    const { id, dayOfWeek, foodItem, userOwner } = req.body;
     try {
-        Week.findById(id)
+        Week.findOne({ id, userOwner })
             .then(Week => {
                 Week[dayOfWeek].pull(foodItem);
                 Week.save();

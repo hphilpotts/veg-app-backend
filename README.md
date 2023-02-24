@@ -90,7 +90,7 @@ My thinking here is that at this stage in the project there is not sufficent req
 - `Week` model added, `services/handle-current-day.js` added. CREATE Week functionality added, tested working ok in Postman.    
 
 21/02/23:   
-- Starting work on Week READ routes. _I've initially realised that testing these routes through Postman with the Week model in its current state is going to be a problem:_ the `exisitngWeek` check in CREATE currently limits my testing pool of 1 document per user (until Sunday that is!).   
+- Starting work on Week READ routes. _I've initially realised that testing these routes through Postman with the Week model in its current state is going to be a problem:_ the `exisitingWeek` check in CREATE currently limits my testing pool of 1 document per user (until Sunday that is!).   
 - As such I am going to create a new branch where I will implement `TestWeek` models to mock the functionality of `Week` models, without the 1/week restriction. From this I will implement and test the remaining READ, UPDATE, DELETE routes for `Week`.    
 
 - READ Week routes implemented and tested working ok in Postman using `TestWeek` model in place of `Week`.    
@@ -98,6 +98,9 @@ My thinking here is that at this stage in the project there is not sufficent req
 22/02/23:   
 - UPDATE & DELETE Week routes implemented and tested working ok in Postman using `TestWeek` model.    
 - `TestWeek` and associated imports, changes removed from `main` branch.    
+
+24/02/23:   
+- I'm now working on authorization to prevent users from accessing other users' documents. Firstly, `middleware/auth.js` renamed to `authentication.js` in order to differentiate from newly created `authorisation.js` middleware.
 
 ## Current issues to resolve:   
 - `week` and `food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    

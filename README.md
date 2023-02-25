@@ -1,6 +1,43 @@
-# Veg App Backend      
+# 'Veg App' - Express JS Backend      
 
-## Initial Setup:   
+## What is it?    
+This is a MongoDB-linked Node.js backend app which uses the Express framework. It has been built to serve a linked React frontend app as part of a dual-app MERN stack project.   
+
+## What does it do?   
+It allows front-end app users to sign up / sign in and then track their daily and weekly intake of fruits, vegetables, nuts & seeds and grains by inputting "food items" that they have eaten.    
+
+There is full CRUD functionality for the `Food-item` and `Week` models. Routes are protected through `JWT`-based authorisation which prevents unauthorised operations on other users' documents.
+
+## Why have I built this?   
+I have built this as part of my portfolio of side projects. Aims for this project were as follows:   
+- build a MERN stack project from the ground up to demonstrate my skills across the stack     
+- refresh my knowledge and understanding of the back-end having recently focused solely on front-end work   
+- take time to understand what I am writing and why (rather than copying source code from previous projects)    
+- gain practice reading various documentation and articles    
+- implmenent improvement around best practices based on my learning since my last Express app   
+- apply 'clean code' disciplines in a practical context   
+- prevent skills atrophy during the job search by varying up my areas of focus    
+
+## Tech stack:    
+- Node.js runtime environment   
+- Express JS application framework     
+- MongoDB NoSQL database    
+- Mongoose ODM library    
+- `jsonwebtoken` auth    
+_For a full list of dependencies see_ `package.json`    
+
+## Dev tools:   
+- Written in VSCode   
+- API testing completed in Postman    
+- MongoDB Compass database GUI    
+
+## Jump to:   
+[Latest progress update](###authorisation-/-authentication:)    
+[Current issues to resolve](##Current-issues-to-resolve:)    
+
+## Project log:   
+
+### Initial Setup:   
 
 11/02/23:       
 - Repos set up, Node.js initialised. ExpressJS, Mongoose, Axios and Dotenv installed. Basic repository structure templated with placeholders.          
@@ -15,7 +52,7 @@
 
 - App loosely structured as above using placeholders. I'm going to start putting in auth functionality first, working from [this tutorial](https://medium.com/swlh/user-authentication-using-mern-stack-part-1-backend-cd4d193f15b1). Moved DB connection from `server.js` to `index.js`. Installed additional dependencies: body-parser, bcrypt, cors, jsonwebtoken.       
 
-## Basic auth functionality, testing issues:    
+### Basic auth functionality, testing issues:    
 
 13/02/23:       
 User model added, signup / signin functionality started but not tested. Passport requires implementing before testing can begin!        
@@ -51,7 +88,7 @@ if (setPortAndListenEnabled) {
 
 - Updated `controllers/auth.js` to better handle errors and provide a `jwt` upon signup as well as on login. [This tutorial](https://dev.to/jeffreythecoder/setup-jwt-authentication-in-mern-from-scratch-ib4) was clear and helpful! Tested in **Postman**. Authorisation middleware added ready for use.    
 
-## Food Item functionality:   
+### Food Item functionality:   
 
 - Implementing 'add food item' functionality: model created, create food item controller added, route implemented. Tested working ok in **Postman**. Now moving on to Read, Update, Delete.   
 - Hit an issue with `foodItem_updateFavourites_post` where route only works on alternate `send`s through Postman, each second request crashes the app:   
@@ -64,7 +101,7 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
 19/02/23:   
 - Updated `foodItem_updateFavourites_post` with simpler syntax and error handling, now working ok - tested in Postman. Delete route implemented and tested ok.    
 
-## Sign out, re-testing, JWT issue:    
+### Sign out, re-testing, JWT issue:    
 
 20/02/23:   
 - Looking at sign out functionality: [this article](https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6) makes for an interesting read with regards to sign out on JWT and invalidating tokens on request. I've made the call to:   
@@ -78,7 +115,7 @@ My thinking here is that at this stage in the project there is not sufficent req
 
 - Issue seen where `jwt.sign` abstracted out from auth controller: token not being sent as response, I have not (after a fair bit of playing around) been able to get a token to return either. I've reversed the abstraction of JWT `payload` creation / `jwt.sign` and implemented them back into `controllers/auth.js`. _Feels like a compromise but I'm trying to strike a balance between making progress and setting realistic goals in relation to my time and ability._   
 
-## Week functionality:    
+### Week functionality:    
 
 - I'm now looking at implementing "Week" functionality: this model will hold a user's data for a given week. _I've had to lend this a fair amount of thought:_    
   - Given I wish to track both daily and weekly totals, I have decided to store a `document` for each week, and store days within that.   
@@ -99,6 +136,8 @@ My thinking here is that at this stage in the project there is not sufficent req
 - UPDATE & DELETE Week routes implemented and tested working ok in Postman using `TestWeek` model.    
 - `TestWeek` and associated imports, changes removed from `main` branch.    
 
+### Authorisation / Authentication:   
+
 24/02/23:   
 - I'm now working on authorization to prevent users from accessing other users' documents. Firstly, `middleware/auth.js` renamed to `authentication.js` in order to differentiate from newly created `authorisation.js` middleware.   
 
@@ -118,4 +157,3 @@ My thinking here is that at this stage in the project there is not sufficent req
   - `res.json({ token })` is not sending from within `utils/create-jwt.js` when imported into auth controller for obvious reasons.    
   - I am unable to instead return `token` from within this and save into / send from `controllers/auth.js`: issue seems to lie as per [this stackoverflow](https://stackoverflow.com/questions/55748325/trying-to-sign-a-jwt-returns-undefined) with "trying to return from a callback" - possibly relating to [this other stackoverflow](https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function#:~:text=There's%20no%20place%20for%20returned,attention%20to%20the%20return%20value.&text=Yes%2C%20it%20makes%20fun%20sense,Unfortunately%2C%20it%20is%20not%20possible.) wherein "you cannot return from an asynchronous call inside a synchronous method".   
   - _Clearly a gap in my understanding here!_ One to pick up and go over in detail until I can understand what was going wrong.   
-

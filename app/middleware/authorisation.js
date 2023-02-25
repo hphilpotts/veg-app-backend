@@ -8,12 +8,12 @@ module.exports = function (req, res, next) {
     if (!token) {
         return res.status(401).json({ "message": 'No token found, authorisation denied' });
     }
-    
+
     try {
 
         jwt.verify(token, process.env.SECRET, (error, decoded) => {
             if (error) {
-                return res.status(401).json({ msg: 'Token provided is not valid, authorisation denied' });
+                return res.status(401).json({ "message": 'Token provided is not valid, authorisation denied' });
             } else {
                 req.user = decoded.user;
             }
@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
         if (req.user.id === userOwner) {
             next();
         } else {
-            return res.status(401).json({ msg: 'User making request does not match document userOwner' });
+            return res.status(403).json({ "message": 'Authorisation denied, user making request is not permitted access.' });
         }
 
     } catch (err) {

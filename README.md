@@ -100,12 +100,14 @@ My thinking here is that at this stage in the project there is not sufficent req
 - `TestWeek` and associated imports, changes removed from `main` branch.    
 
 24/02/23:   
-- I'm now working on authorization to prevent users from accessing other users' documents. Firstly, `middleware/auth.js` renamed to `authentication.js` in order to differentiate from newly created `authorisation.js` middleware.
+- I'm now working on authorization to prevent users from accessing other users' documents. Firstly, `middleware/auth.js` renamed to `authentication.js` in order to differentiate from newly created `authorisation.js` middleware.   
+
+25/02/23:   
+- Authorisation checks tested in Postman and working ok. Added to other `Week` routes as required. Authentication check added to remaining `Week` routes.   
 
 ## Current issues to resolve:   
-- `week` and `food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
+- `Week` and `Food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
 - Daily entries into Week model are not typed as `ObjectId`.    
-- Authorisation not yet implemented.    
 
 ## Future features to implement:
 - 'Blacklisting' of tokens which required invalidation prior to their expiration time.    

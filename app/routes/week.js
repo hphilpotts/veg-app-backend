@@ -5,18 +5,21 @@ router.use(express.json());
 
 const weekController = require('../controllers/week');
 
-router.post('/week/newWeek', weekController.week_create_post);
+const isLoggedInCheck = require('../middleware/authentication');
+const authorisationCheck = require('../middleware/authorisation');
 
-router.get('/week/index', weekController.week_indexByUser_get);
-router.get('/week/current', weekController.week_currentWeek_get);
-router.get('/week/today', weekController.week_currentDay_get);
-router.get('/week/detail', weekController.week_detailById_get);
-router.get('/week/dailyDetail', weekController.week_dailyDetailById_get);
+router.post('/week/newWeek', isLoggedInCheck, weekController.week_create_post);
 
-router.post('/week/update', weekController.week_updateEntries_post);
+router.get('/week/index', authorisationCheck, weekController.week_indexByUser_get);
+router.get('/week/current', authorisationCheck, weekController.week_currentWeek_get);
+router.get('/week/today', authorisationCheck, weekController.week_currentDay_get);
+router.get('/week/detail', authorisationCheck, weekController.week_detailById_get);
+router.get('/week/dailyDetail', authorisationCheck, weekController.week_dailyDetailById_get);
 
-router.delete('/week/deleteAll', weekController.week_deleteAll);
-router.delete('/week/deleteDay', weekController.week_deleteDay);
-router.delete('/week/deleteEntry', weekController.week_deleteEntry);
+router.post('/week/update', authorisationCheck, weekController.week_updateEntries_post);
+
+router.delete('/week/deleteAll', authorisationCheck, weekController.week_deleteAll);
+router.delete('/week/deleteDay', authorisationCheck, weekController.week_deleteDay);
+router.delete('/week/deleteEntry', authorisationCheck, weekController.week_deleteEntry);
 
 module.exports = router;

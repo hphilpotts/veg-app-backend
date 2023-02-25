@@ -14,7 +14,7 @@ I have built this as part of my portfolio of side projects. Aims for this projec
 - refresh my knowledge and understanding of the back-end having recently focused solely on front-end work   
 - take time to understand what I am writing and why (rather than copying source code from previous projects)    
 - gain practice reading various documentation and articles    
-- implmenent improvement around best practices based on my learning since my last Express app   
+- implement improvement around best practices based on my learning since my last Express app   
 - apply 'clean code' disciplines in a practical context   
 - prevent skills atrophy during the job search by varying up my areas of focus    
 
@@ -32,8 +32,8 @@ _For a full list of dependencies see_ `package.json`
 - MongoDB Compass database GUI    
 
 ## Jump to:   
-[Latest progress update](###authorisation-/-authentication:)    
-[Current issues to resolve](##Current-issues-to-resolve:)    
+[Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
+[Current issues to resolve](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
 
 ## Project log:   
 
@@ -106,9 +106,9 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
 20/02/23:   
 - Looking at sign out functionality: [this article](https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6) makes for an interesting read with regards to sign out on JWT and invalidating tokens on request. I've made the call to:   
   - Reduce `expiresIn` time in `create-jwt.js` to 1 day.    
-  - Handle logout in the fronend through deleting tokens from client-side storage.    
+  - Handle logout in the frontend through deleting tokens from client-side storage.    
   - Put a 'token blacklist' feature in **Future features to implement** for later implementation.   
-My thinking here is that at this stage in the project there is not sufficent requirement for the addional step of invalidating tokesn prior to their expiry: in short, my efforts would be better spend elsewhere!    
+My thinking here is that at this stage in the project there is not sufficient requirement for the additional step of invalidating tokens prior to their expiry: in short, my efforts would be better spend elsewhere!    
 
 - Competed general formatting and cleanup across all source code.   
 - Now re-testing all routes implemented so far in Postman.
@@ -120,14 +120,14 @@ My thinking here is that at this stage in the project there is not sufficent req
 - I'm now looking at implementing "Week" functionality: this model will hold a user's data for a given week. _I've had to lend this a fair amount of thought:_    
   - Given I wish to track both daily and weekly totals, I have decided to store a `document` for each week, and store days within that.   
   - I have decided to use a new document for each user.   
-  - Daily totals are stored within an object, using keys `0...6`: Sunday-Saturday respectivel as per `Date.prototype.getDay()`.   
+  - Daily totals are stored within an object, using keys `0...6`: Sunday-Saturday respectively as per `Date.prototype.getDay()`.   
   - Week commencing is tracked to establish if a record already exists for that week (ensuring duplicated are not created in error!).   
   - Weekly totals are extrapolated from daily entries (total unique items).   
 
 - `Week` model added, `services/handle-current-day.js` added. CREATE Week functionality added, tested working ok in Postman.    
 
 21/02/23:   
-- Starting work on Week READ routes. _I've initially realised that testing these routes through Postman with the Week model in its current state is going to be a problem:_ the `exisitingWeek` check in CREATE currently limits my testing pool of 1 document per user (until Sunday that is!).   
+- Starting work on Week READ routes. _I've initially realised that testing these routes through Postman with the Week model in its current state is going to be a problem:_ the `existingWeek` check in CREATE currently limits my testing pool of 1 document per user (until Sunday that is!).   
 - As such I am going to create a new branch where I will implement `TestWeek` models to mock the functionality of `Week` models, without the 1/week restriction. From this I will implement and test the remaining READ, UPDATE, DELETE routes for `Week`.    
 
 - READ Week routes implemented and tested working ok in Postman using `TestWeek` model in place of `Week`.    

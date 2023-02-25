@@ -1,7 +1,7 @@
 const FoodItem = require('../models/Food-item');
 
 exports.foodItem_create_post = async (req, res) => {
-    const { foodItemName, foodItemCategory, userAddedBy } = req.body;
+    const { foodItemName, foodItemCategory, userOwner } = req.body;
 
     try {
 
@@ -17,7 +17,7 @@ exports.foodItem_create_post = async (req, res) => {
         const newFoodItem = new FoodItem({
             foodItemName,
             foodItemCategory,
-            userAddedBy
+            userOwner
         });
 
         await newFoodItem.save()
@@ -59,7 +59,7 @@ exports.foodItem_detail_get = (req, res) => {
 }
 
 exports.foodItem_byUser_get = (req, res) => {
-    FoodItem.find({ userAddedBy: req.body.userAddedBy })
+    FoodItem.find({ userOwner: req.body.userOwner })
         .then(usersItems => {
             res.json({ usersItems }).status(200);
         })
@@ -83,7 +83,11 @@ exports.foodItem_favourites_get = (req, res) => {
 // U
 
 exports.foodItem_edit_post = (req, res) => {
-    FoodItem.findByIdAndUpdate(req.body.id, req.body)
+    const id = req.body.id;
+    const userOwner = req.body.userOwner;
+    FoodItem.findOneAndUpdate({ id, userOwner }, req.body, {
+        new: true
+    })
         .then(() => {
             res.json({ "message": "Food item updated successfully!" }).status(200);
         })
@@ -95,7 +99,8 @@ exports.foodItem_edit_post = (req, res) => {
 
 exports.foodItem_updateFavourites_post = async (req, res) => {
 
-    const { id, user } = req.body;
+    const id = req.body.id;
+    const user = req.body.userOwner;
 
     try {
         const foundItem = await FoodItem.findById(id);
@@ -129,8 +134,9 @@ exports.foodItem_updateFavourites_post = async (req, res) => {
 }
 
 exports.foodItem_deleteById = async (req, res) => {
+    const { id, userOwner } = req.body;
     try {
-        await FoodItem.findByIdAndDelete(req.body.id);
+        await FoodItem.findOne(id, userOwner).deleteOne();
         res.json({ "message": "Food item successfully deleted." }).status(200);
     } catch (err) {
         console.error(err);

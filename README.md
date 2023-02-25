@@ -104,6 +104,7 @@ My thinking here is that at this stage in the project there is not sufficent req
 
 25/02/23:   
 - Authorisation checks tested in Postman and working ok. Added to other `Week` routes as required. Authentication check added to remaining `Week` routes.   
+- Auth middleware also applied to `Food-item` routes - this required some updates to controller.    
 
 ## Current issues to resolve:   
 - `Week` and `Food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    

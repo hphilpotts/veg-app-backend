@@ -31,11 +31,153 @@ _For a full list of dependencies see_ `package.json`
 - API testing completed in Postman    
 - MongoDB Compass database GUI    
 
+--- 
 ## Jump to:   
 [Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
 [Current issues to resolve](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
 
-## Project log:   
+---
+
+## API request overview:    
+
+### **AUTH APIs**:    
+
+_All request bodies to be sent in JSON format._   
+
+#### POST - User Sign Up    
+`/auth/signup`   
+- Create user, respond with signed JWT `token` if successful.   
+- Request body: `userName, emailAddress, password` from form submission.    
+
+#### POST - User Sign In    
+`auth/signin`   
+- Retrieve signed JWT `token` if successful.   
+- Request body: `emailAddress, password` from form submission.    
+
+### **FOOD-ITEM APIs**:    
+
+_All request bodies to be sent in JSON format._   
+
+_All Food-item routes protected by JWT checks:_    
+- Request headers on all routes must include `x-auth-token` containing a valid JWT.    
+
+#### POST Food-item Add   
+`foodItem/add`    
+- Add new Food-item document to collection.    
+- Request body: `foodItemName, foodItemCategory, userOwner`.    
+
+#### GET Food-item Index    
+`foodItem/index`    
+- Get all Food-items from collection.   
+
+#### GET Food-item Detail    
+`foodItem/detail`   
+- Get Food-item by document ID.   
+- Request body: `id`    
+
+#### GET Food-item By User   
+`foodItem/userAddedBy`    
+- Get all Food-items added by a specified User.    
+- Request body: `userOwner`    
+
+#### GET Food-item Favourites    
+`foodItem/favourites`   
+- Get all Food-items favourited by a specified User.    
+- Request body: `userFavouritedBy`    
+
+#### POST Food-item Edit    
+`foodItem/edit`   
+- Update Food-item based on document ID.    
+- Restricted to user who created selected item only: token in header checked against Food-item document's `userOwner`.    
+- Request body: `id, userOwner`, document fields to be updated, e.g.: . 
+       <!-- todo add example! -->
+
+#### POST Food-item Add/Remove from Favourites   
+`foodItem/favourite`    
+- Toggle Food-item as specified by ID in user's favourites.    
+- Can only be favourited/unfavourited by user making request: token in header checked against `userOwner` in request body.        
+- Request body: `id, userOwner`       
+
+#### DELETE Food-item By Id   
+`foodItem/delete`   
+- Delete Food-item document by ID.    
+- Restricted to user who created selected item only: token in header checked against Food-item document's `userOwner`.    
+- Request body: `id, userOwner`       
+
+### **WEEK APIs**    
+
+_All request bodies to be sent in JSON format._   
+
+_All Week routes protected by JWT checks:_    
+- Request headers on all routes must include `x-auth-token` containing a valid JWT.     
+
+#### POST Week Add New Week       
+`week/newWeek`   
+- Add new Week document to collection.      
+- Request body: `userOwner`     
+
+#### GET Week Index by User     
+`week/index`   
+- Get all Week documents in reverse chronological order by User.     
+- User's Week documents restricted to user making request only: token in header checked against request body's `userOwner`.    
+- Request body: `userOwner`     
+
+#### GET Current Week Detail by User       
+`week/current`   
+- Get current Week document for User.     
+- User's current Week document restricted to user making request only: token in header checked against request body's `userOwner`.    
+- Request body: `userOwner`     
+
+#### GET Current Day Detail from Week by User.   
+`week/today`   
+- Get today's entries from Week document for User.    
+- User's Week document accessed restricted to user making request only: token in header checked against request body's `userOwner`.    
+- Request body: `userOwner`  
+
+#### GET Week Detail by ID   
+`week/detail`   
+- Get specific Week document by ID.     
+- Week documents accessible restricted to those owned by user making request: token in header checked against request body's `userOwner`.    
+- Request body: `id, userOwner`     
+
+#### GET Week Daily Detail by ID   
+`week/dailyDetail`   
+- Get specific day entry detail from Week document.     
+- Day data from Week documents restricted to those owned by user making request: token in header checked against request body's `userOwner`.    
+- Request body: `id, day, userOwner`    
+- Day specified by digit as string: `0-6` representing 'Sunday-Saturday'.   
+
+#### POST Update Week Food-item Entries by ID   
+`week/update`   
+- Add a new food item to a specified day within the selected week.        
+- Restricted to user who owns specified week only: token in header checked against request body's `userOwner`.    
+- Request body: `id, dayOfWeek, foodItem, userOwner`      
+- Day specified by digit as string: `0-6` representing 'Sunday-Saturday'.   
+- Food-item specified by Food-item `id`.    
+
+#### DELETE Week by ID   
+`week/deleteAll`   
+- Delete Week document.     
+- Restricted to user who owns specified week only: token in header checked against request body's `userOwner`.    
+- Request body: `id, userOwner`     
+
+#### DELETE Day from Week by ID    
+`week/deleteDay`   
+- Delete specified day from selected Week.  
+- Restricted to user who owns specified week only: token in header checked against request body's `userOwner`.    
+- Request body: `id, dayOfWeek, userOwner`  
+- Day specified by digit as string: `0-6` representing 'Sunday-Saturday'.   
+
+#### DELETE Entry from Week by ID and Day   
+`week/deleteEntry`   
+- Delete specified entry from specified day within selected Week.  
+- Restricted to user who owns specified week only: token in header checked against request body's `userOwner`.    
+- Request body: `id, dayOfWeek, foodItem, userOwner`
+- Day specified by digit as string: `0-6` representing 'Sunday-Saturday'.   
+- Food-item specified by Food-item `id`.   
+
+
+## Project log (detail):   
 
 ### Initial Setup:   
 

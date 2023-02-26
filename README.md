@@ -34,11 +34,11 @@ _For a full list of dependencies see_ `package.json`
 --- 
 ## Jump to:   
 [Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
-[Issues, features to add, unanswered questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
-[Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)
-[Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)
-[Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)
-[Project log detail](https://github.com/hphilpotts/veg-app-backend#project-log-detail)
+[Issues, future features, questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
+[Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)    
+[Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)    
+[Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)    
+[Project log detail](https://github.com/hphilpotts/veg-app-backend#project-log-detail)    
 
 ---
 

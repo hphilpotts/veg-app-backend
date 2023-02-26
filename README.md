@@ -34,7 +34,11 @@ _For a full list of dependencies see_ `package.json`
 --- 
 ## Jump to:   
 [Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
-[Current issues to resolve](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
+[Issues, features to add, unanswered questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
+[Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)
+[Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)
+[Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)
+[Project log detail](https://github.com/hphilpotts/veg-app-backend#project-log-detail)
 
 ---
 
@@ -294,7 +298,7 @@ My thinking here is that at this stage in the project there is not sufficient re
 ## Future features to implement:
 - 'Blacklisting' of tokens which required invalidation prior to their expiration time.    
 
-## Known unknowns:
+## Unanswered questions (known unknowns):   
 - Issues seen when `createJWT` (specifically `jwt.sign`) abstracted out into `utils/` from `controllers/auth.js`:
   - `res.json({ token })` is not sending from within `utils/create-jwt.js` when imported into auth controller for obvious reasons.    
   - I am unable to instead return `token` from within this and save into / send from `controllers/auth.js`: issue seems to lie as per [this stackoverflow](https://stackoverflow.com/questions/55748325/trying-to-sign-a-jwt-returns-undefined) with "trying to return from a callback" - possibly relating to [this other stackoverflow](https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function#:~:text=There's%20no%20place%20for%20returned,attention%20to%20the%20return%20value.&text=Yes%2C%20it%20makes%20fun%20sense,Unfortunately%2C%20it%20is%20not%20possible.) wherein "you cannot return from an asynchronous call inside a synchronous method".   

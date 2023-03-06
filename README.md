@@ -33,12 +33,12 @@ _For a full list of dependencies see_ `package.json`
 
 --- 
 ## Jump to:   
-[Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
-[Issues, future features, questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
-[Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)    
-[Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)    
-[Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)    
-[Project log detail](https://github.com/hphilpotts/veg-app-backend#project-log-detail)    
+- [Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
+- [Issues, future features, questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
+- [Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)    
+- [Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)    
+- [Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)    
+- [Project log detail](https://github.com/hphilpotts/veg-app-backend#project-log-detail)    
 
 ---
 
@@ -281,6 +281,9 @@ My thinking here is that at this stage in the project there is not sufficient re
 22/02/23:   
 - UPDATE & DELETE Week routes implemented and tested working ok in Postman using `TestWeek` model.    
 - `TestWeek` and associated imports, changes removed from `main` branch.    
+
+### Linking to frontend React app:    
+- `auth.js` controller updated: sign up response adjusted to ensure all three of `token`, `"message"` and `status` are sent in the response data, additional status code added to sign in response.     
 
 ### Authorisation / Authentication:   
 

@@ -7,6 +7,11 @@ exports.auth_signup = async (req, res) => {
 
     // TODO - handle further password restrictions in frontend
 
+    // ! debug
+    console.log('Creating new user...')
+    console.log('user from fe:')
+    console.log(req.body);
+
     const { userName, emailAddress, password } = req.body;
 
     try {
@@ -35,29 +40,32 @@ exports.auth_signup = async (req, res) => {
 
         await user.save()
             .then(() => {
-                res.json({ "message": "User created sucessfully!" }).status(201);
+
+                const payload = {
+                    user: {
+                        id: user._id,
+                        username: user.userName
+                    }
+                };
+
+                console.log(payload);
+
+                jwt.sign(
+                    payload,
+                    process.env.SECRET,
+                    { expiresIn: '3 days' },
+                    (err, token) => {
+                        if (err) throw err;
+                        console.log(token);
+                        res.json({ token, "message": "User created sucessfully!" }).status(201);
+                    }
+                );
+
             })
             .catch((err) => {
                 console.log(err);
                 res.json({ "message": "error creating user, try again!" });
             })
-
-        const payload = {
-            user: {
-                id: user._id,
-                username: user.userName
-            }
-        };
-
-        jwt.sign(
-            payload,
-            process.env.SECRET,
-            { expiresIn: '3 days' },
-            (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-            }
-        );
 
     } catch (err) {
         console.error(err.message);
@@ -91,7 +99,7 @@ exports.auth_signin = async (req, res) => {
             { expiresIn: '3 days' },
             (err, token) => {
                 if (err) throw err;
-                res.json({ token });
+                res.json({ token, "message": "login successful!" }).status(200);
             }
         );
 

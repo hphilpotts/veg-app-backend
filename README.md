@@ -294,7 +294,7 @@ My thinking here is that at this stage in the project there is not sufficient re
 - Authorisation checks tested in Postman and working ok. Added to other `Week` routes as required. Authentication check added to remaining `Week` routes.   
 - Auth middleware also applied to `Food-item` routes - this required some updates to controller.      
 
-### Rewriting GET reqeusts requiring a `request.body`   
+### Rewriting GET reqeusts requiring a `request.body`:   
 
 20/03/23:   
 Had a big learn with regards to GET requests - it's been a while since I covered these - as I was running into all sorts of problems in my frontend where GET requests for a specific document required a request body (typically carrying a `userOwner` key:val pair).   
@@ -308,8 +308,13 @@ _I've made the call to use PUTs as this should require less work as compared wit
 
 _First succesful PUT made in frontend also._    
 
+### Update to FoodItem route protection:   
+
+- I spotted that I had a duplicate import in FoodItem routes: specifically, my authentication middleware had been imported twice under different variable names, both of which saw use as middleware route protection.    
+- Further digging showed that I had been applying authentication checks in error, when I should have been using authorisation checks: as long as users provided any valid token, they would be able to access request routes which I had intended to limit only to a specified `userOwner`. This might mean, for example, that a user could favourite or unfavourite an item on another user's behalf.    
+- Middleware imports and subsequent route protection therefore updated in `routes/food-item.js`.    
+
 ## Current issues to resolve:   
-- `Food-item` route protection needs updating to incorporate either authorisation or authentication depending on requirements (currently only uses authentication).   
 - `Week` and `Food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
 - Daily entries into Week model are not typed as `ObjectId`.    
 

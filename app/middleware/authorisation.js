@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
 
+    console.log(req.body);
+
     const token = req.header('x-auth-token');
     const userOwner = req.body.userOwner;
 
@@ -18,6 +20,9 @@ module.exports = function (req, res, next) {
                 req.user = decoded.user;
             }
         })
+
+        console.log('middleware is comparing the req.user.id to the Week user owner:');
+        console.log(req.user.id, userOwner)
 
         if (req.user.id === userOwner) {
             next();

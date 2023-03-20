@@ -75,16 +75,19 @@ _All Food-item routes protected by JWT checks:_
 - Get all Food-items from collection.   
 
 #### GET Food-item Detail    
+<!-- todo : rewrite to PUT -->
 `foodItem/detail`   
 - Get Food-item by document ID.   
 - Request body: `id`    
 
 #### GET Food-item By User   
+<!-- todo : rewrite to PUT -->
 `foodItem/userAddedBy`    
 - Get all Food-items added by a specified User.    
 - Request body: `userOwner`    
 
 #### GET Food-item Favourites    
+<!-- todo : rewrite to PUT -->
 `foodItem/favourites`   
 - Get all Food-items favourited by a specified User.    
 - Request body: `userFavouritedBy`    
@@ -121,6 +124,7 @@ _All Week routes protected by JWT checks:_
 - Request body: `userOwner`     
 
 #### GET Week Index by User     
+<!-- todo : test if working -->
 `week/index`   
 - Get all Week documents in reverse chronological order by User.     
 - User's Week documents restricted to user making request only: token in header checked against request body's `userOwner`.    
@@ -133,18 +137,21 @@ _All Week routes protected by JWT checks:_
 - Request body: `userOwner`     
 
 #### GET Current Day Detail from Week by User.   
+<!-- todo : test if working -->
 `week/today`   
 - Get today's entries from Week document for User.    
 - User's Week document accessed restricted to user making request only: token in header checked against request body's `userOwner`.    
 - Request body: `userOwner`  
 
 #### GET Week Detail by ID   
+<!-- todo : test if working -->
 `week/detail`   
 - Get specific Week document by ID.     
 - Week documents accessible restricted to those owned by user making request: token in header checked against request body's `userOwner`.    
 - Request body: `id, userOwner`     
 
 #### GET Week Daily Detail by ID   
+<!-- todo : test if working -->
 `week/dailyDetail`   
 - Get specific day entry detail from Week document.     
 - Day data from Week documents restricted to those owned by user making request: token in header checked against request body's `userOwner`.    
@@ -292,14 +299,26 @@ My thinking here is that at this stage in the project there is not sufficient re
 
 25/02/23:   
 - Authorisation checks tested in Postman and working ok. Added to other `Week` routes as required. Authentication check added to remaining `Week` routes.   
-- Auth middleware also applied to `Food-item` routes - this required some updates to controller.    
+- Auth middleware also applied to `Food-item` routes - this required some updates to controller.      
+
+### Rewriting GET reqeusts requiring a `request.body`   
+
+20/03/23:   
+Had a big learn with regards to GET requests - it's been a while since I covered these - as I was running into all sorts of problems in my frontend where GET requests for a specific document required a request body (typically carrying a `userOwner` key:val pair).   
+- It seemed that significantly adjusting my approach in the frontend would a) be avoiding approaching a fundamental flaw in the backend and b) not neccessarily be workable.    
+- I therefore have a choice to make: either rewrite the affected GET requests in order to make them PUT requests instead, or rewrite them to take a query parameter instead of a request body.    
+
+_I've made the call to use PUTs as this should require less work as compared with using query parameters, for example with regards to authorisation, where the PUT approach does not need any changes (but query param approach would). I would, however, like to revisit this and consider the possible advantages of switching to the query param approach further down the line._       
+
+- All GET Week requests and associated routes now updated to PUTs where required.   
 
 ## Current issues to resolve:   
 - `Week` and `Food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
 - Daily entries into Week model are not typed as `ObjectId`.    
 
 ## Future features to implement:
-- 'Blacklisting' of tokens which required invalidation prior to their expiration time.    
+- 'Blacklisting' of tokens which required invalidation prior to their expiration time.      
+- GET requests rewritten as PUT requests (in order to pass a `request.body`) could be rewritted as GET requests which take a query parameter: _'pros' and 'cons' of both approaches need to be weighed up and a decision made_.
 
 ## Unanswered questions (known unknowns):   
 - Issues seen when `createJWT` (specifically `jwt.sign`) abstracted out into `utils/` from `controllers/auth.js`:

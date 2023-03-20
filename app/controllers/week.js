@@ -34,7 +34,7 @@ exports.week_create_post = async (req, res) => {
 
 }
 
-exports.week_indexByUser_get = async (req, res) => {
+exports.week_indexByUser_put = async (req, res) => {
     const { userOwner } = req.body;
     Week.find({ userOwner }).sort('-weekCommencing')
         .then(Weeks => {
@@ -46,7 +46,7 @@ exports.week_indexByUser_get = async (req, res) => {
         });
 }
 
-exports.week_currentWeek_get = (req, res) => {
+exports.week_currentWeek_put = (req, res) => {
     const { userOwner } = req.body;
     Week.findOne({ userOwner, weekCommencing })
         .then(Week => {
@@ -58,7 +58,7 @@ exports.week_currentWeek_get = (req, res) => {
         });
 }
 
-exports.week_currentDay_get = (req, res) => {
+exports.week_currentDay_put = (req, res) => {
     const { userOwner } = req.body;
     const currentDay = handleCurrent.getCurrentDayOfTheWeek();
 
@@ -73,7 +73,7 @@ exports.week_currentDay_get = (req, res) => {
         });
 }
 
-exports.week_detailById_get = (req, res) => {
+exports.week_detailById_put = (req, res) => {
     const { id, userOwner } = req.body;
     Week.findOne({id, userOwner})
         .then(Week => {
@@ -85,7 +85,7 @@ exports.week_detailById_get = (req, res) => {
         });
 }
 
-exports.week_dailyDetailById_get = (req, res) => {
+exports.week_dailyDetailById_put = (req, res) => {
     const { id, day, userOwner } = req.body;
     Week.findOne({id, userOwner})
         .then(Week => {

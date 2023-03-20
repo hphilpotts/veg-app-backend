@@ -10,11 +10,11 @@ const authorisationCheck = require('../middleware/authorisation');
 
 router.post('/week/newWeek', isLoggedInCheck, weekController.week_create_post);
 
-router.get('/week/index', authorisationCheck, weekController.week_indexByUser_get);
-router.get('/week/current', authorisationCheck, weekController.week_currentWeek_get);
-router.get('/week/today', authorisationCheck, weekController.week_currentDay_get);
-router.get('/week/detail', authorisationCheck, weekController.week_detailById_get);
-router.get('/week/dailyDetail', authorisationCheck, weekController.week_dailyDetailById_get);
+router.put('/week/index', authorisationCheck, weekController.week_indexByUser_put);
+router.put('/week/current', authorisationCheck, weekController.week_currentWeek_put);
+router.put('/week/today', authorisationCheck, weekController.week_currentDay_put);
+router.put('/week/detail', authorisationCheck, weekController.week_detailById_put);
+router.put('/week/dailyDetail', authorisationCheck, weekController.week_dailyDetailById_put);
 
 router.post('/week/update', authorisationCheck, weekController.week_updateEntries_post);
 

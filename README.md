@@ -93,8 +93,15 @@ _All Food-item routes protected by JWT checks:_
 `foodItem/edit`   
 - Update Food-item based on document ID.    
 - Restricted to user who created selected item only: token in header checked against Food-item document's `userOwner`.    
-- Request body: `id, userOwner`, document fields to be updated, e.g.: . 
-       <!-- todo add example! -->
+- Request body: `id, userOwner`, document fields to be updated, e.g.:   
+```
+{
+    "id": "63efc4d3e21b7235dd0f5ec7", // required
+    "userOwner": "640f0e85a8168b456aa1b589", // required
+    "foodItemName": "Romaine lettuce", // field to be updated
+    [...] // any subsequent fields to be updated
+}
+```
 
 #### POST Food-item Add/Remove from Favourites   
 `foodItem/favourite`    

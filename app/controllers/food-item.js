@@ -47,7 +47,7 @@ exports.foodItem_index_get = (req, res) => {
         })
 }
 
-exports.foodItem_detail_get = (req, res) => {
+exports.foodItem_detail_put = (req, res) => {
     FoodItem.findById(req.body.id)
         .then(foundItem => {
             res.json({ foundItem }).status(200);
@@ -58,7 +58,7 @@ exports.foodItem_detail_get = (req, res) => {
         })
 }
 
-exports.foodItem_byUser_get = (req, res) => {
+exports.foodItem_byUser_put = (req, res) => {
     FoodItem.find({ userOwner: req.body.userOwner })
         .then(usersItems => {
             res.json({ usersItems }).status(200);
@@ -69,7 +69,7 @@ exports.foodItem_byUser_get = (req, res) => {
         })
 }
 
-exports.foodItem_favourites_get = (req, res) => {
+exports.foodItem_favourites_put = (req, res) => {
     FoodItem.find({ usersFavouritedBy: req.body.usersFavouritedBy })
         .then(usersFavourites => {
             res.json({ usersFavourites }).status(200);

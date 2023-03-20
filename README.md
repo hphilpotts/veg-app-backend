@@ -74,20 +74,17 @@ _All Food-item routes protected by JWT checks:_
 `foodItem/index`    
 - Get all Food-items from collection.   
 
-#### GET Food-item Detail    
-<!-- todo : rewrite to PUT -->
+#### PUT Retrieve Food-item Detail    
 `foodItem/detail`   
 - Get Food-item by document ID.   
 - Request body: `id`    
 
-#### GET Food-item By User   
-<!-- todo : rewrite to PUT -->
+#### PUT Retrieve Food-item By User   
 `foodItem/userAddedBy`    
 - Get all Food-items added by a specified User.    
 - Request body: `userOwner`    
 
 #### GET Food-item Favourites    
-<!-- todo : rewrite to PUT -->
 `foodItem/favourites`   
 - Get all Food-items favourited by a specified User.    
 - Request body: `userFavouritedBy`    
@@ -123,35 +120,31 @@ _All Week routes protected by JWT checks:_
 - Add new Week document to collection.      
 - Request body: `userOwner`     
 
-#### GET Week Index by User     
-<!-- todo : test if working -->
+#### PUT Retrieve Week Index by User     
 `week/index`   
 - Get all Week documents in reverse chronological order by User.     
 - User's Week documents restricted to user making request only: token in header checked against request body's `userOwner`.    
 - Request body: `userOwner`     
 
-#### GET Current Week Detail by User       
+#### PUT Retrieve Current Week Detail by User       
 `week/current`   
 - Get current Week document for User.     
 - User's current Week document restricted to user making request only: token in header checked against request body's `userOwner`.    
 - Request body: `userOwner`     
 
-#### GET Current Day Detail from Week by User.   
-<!-- todo : test if working -->
+#### PUT Retrieve Current Day Detail from Week by User.   
 `week/today`   
 - Get today's entries from Week document for User.    
 - User's Week document accessed restricted to user making request only: token in header checked against request body's `userOwner`.    
 - Request body: `userOwner`  
 
-#### GET Week Detail by ID   
-<!-- todo : test if working -->
+#### PUT Retrieve Week Detail by ID   
 `week/detail`   
 - Get specific Week document by ID.     
 - Week documents accessible restricted to those owned by user making request: token in header checked against request body's `userOwner`.    
 - Request body: `id, userOwner`     
 
-#### GET Week Daily Detail by ID   
-<!-- todo : test if working -->
+#### PUT Retrieve Week Daily Detail by ID   
 `week/dailyDetail`   
 - Get specific day entry detail from Week document.     
 - Day data from Week documents restricted to those owned by user making request: token in header checked against request body's `userOwner`.    
@@ -311,8 +304,12 @@ Had a big learn with regards to GET requests - it's been a while since I covered
 _I've made the call to use PUTs as this should require less work as compared with using query parameters, for example with regards to authorisation, where the PUT approach does not need any changes (but query param approach would). I would, however, like to revisit this and consider the possible advantages of switching to the query param approach further down the line._       
 
 - All GET Week requests and associated routes now updated to PUTs where required.   
+- Ditto all GET FoodItem requests. All updates tested, readme API documentation updated.    
+
+_First succesful PUT made in frontend also._    
 
 ## Current issues to resolve:   
+- `Food-item` route protection needs updating to incorporate either authorisation or authentication depending on requirements (currently only uses authentication).   
 - `Week` and `Food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
 - Daily entries into Week model are not typed as `ObjectId`.    
 

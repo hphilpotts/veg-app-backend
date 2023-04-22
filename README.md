@@ -65,7 +65,13 @@ Submit a pull request for any proposed changes.
 - [Project Build Log](https://github.com/hphilpotts/veg-app-backend#project-log-detail)    
 
 ---
+## Project ERD:   
 
+
+![](../veg-app-be/readme_img/ERD.png)     
+_ERD from early version of project - daily entries into Week model (fields 0-6) are not typed as `ObjectId` at this stage._
+ 
+---
 ## API request overview:    
 
 ### **AUTH API requests**:    

@@ -68,7 +68,8 @@ Submit a pull request for any proposed changes.
 ## Project ERD:   
 
 
-![](../veg-app-be/readme_img/ERD.png)     
+![Image of Project ERD - three entities: Food-item, User, Week](/readme_img/ERD.png)
+
 _ERD from early version of project - daily entries into Week model (fields 0-6) are not typed as `ObjectId` at this stage._
  
 ---

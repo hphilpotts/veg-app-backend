@@ -23,13 +23,38 @@ I have built this as part of my portfolio of side projects. Aims for this projec
 - Express JS application framework     
 - MongoDB NoSQL database    
 - Mongoose ODM library    
-- `jsonwebtoken` auth    
+- `jsonwebtoken` auth     
+
 _For a full list of dependencies see_ `package.json`    
 
 ## Dev tools:   
 - Written in VSCode   
 - API testing completed in Postman    
 - MongoDB Compass database GUI    
+
+## Install / contribute:    
+To run this API locally and/or contribute to this project, please fork and then clone this repository.    
+
+Run `npm i` in order to install required dependencies.     
+
+Install MongoDB Compass on your local machine, establish a connection and create a new database.    
+
+Create a `.env` file in the project root directory with the following key-values:   
+  ```
+  PORT = *PORT NUMBER*
+  MONGODB_LOCAL_URL = *'<MongoDB Compass connection string>/<database name>'*
+  SECRET = *'your secret key'*
+  ```
+
+Create a `.gitignore` file in the project root directory as below:    
+```
+/node_modules
+/.env
+```   
+
+Run `npm start` and await success messages in the terminal for Application port, Mongoose connection and local MongoDB connection.    
+
+Submit a pull request for any proposed changes.   
 
 --- 
 ## Jump to:   
@@ -43,7 +68,7 @@ _For a full list of dependencies see_ `package.json`
 
 ## API request overview:    
 
-### **AUTH APIs**:    
+### **AUTH API requests**:    
 
 _All request bodies to be sent in JSON format._   
 
@@ -57,7 +82,7 @@ _All request bodies to be sent in JSON format._
 - Retrieve signed JWT `token` if successful.   
 - Request body: `emailAddress, password` from form submission.    
 
-### **FOOD-ITEM APIs**:    
+### **FOOD-ITEM API requests**:    
 
 _All request bodies to be sent in JSON format._   
 
@@ -114,7 +139,7 @@ _All Food-item routes protected by JWT checks:_
 - Restricted to user who created selected item only: token in header checked against Food-item document's `userOwner`.    
 - Request body: `id, userOwner`       
 
-### **WEEK APIs**    
+### **WEEK API requests**    
 
 _All request bodies to be sent in JSON format._   
 

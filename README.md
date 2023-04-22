@@ -33,11 +33,11 @@ _For a full list of dependencies see_ `package.json`
 
 --- 
 ## Jump to:   
-- [Latest progress update](https://github.com/hphilpotts/veg-app-backend#authorisation--authentication)    
 - [Issues, future features, questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
 - [Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)    
 - [Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)    
 - [Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)    
+- [Project Build Log](https://github.com/hphilpotts/veg-app-backend#project-log-detail)    
 
 ---
 
@@ -186,11 +186,6 @@ _All Week routes protected by JWT checks:_
 - Day specified by digit as string: `0-6` representing 'Sunday-Saturday'.   
 - Food-item specified by Food-item `id`.   
 
-
-## Project log (detail):      
-
-- [Link to detailed project build log here](https://github.com/hphilpotts/veg-app-backend/main/buildLog.md)
-
 ## Current issues to resolve:   
 - `Week` and `Food-item` controllers require refactoring: particularly abstraction of logic, possibly combining routes that perform similar functions.    
 - Daily entries into Week model are not typed as `ObjectId`.    
@@ -203,4 +198,7 @@ _All Week routes protected by JWT checks:_
 - Issues seen when `createJWT` (specifically `jwt.sign`) abstracted out into `utils/` from `controllers/auth.js`:
   - `res.json({ token })` is not sending from within `utils/create-jwt.js` when imported into auth controller for obvious reasons.    
   - I am unable to instead return `token` from within this and save into / send from `controllers/auth.js`: issue seems to lie as per [this stackoverflow](https://stackoverflow.com/questions/55748325/trying-to-sign-a-jwt-returns-undefined) with "trying to return from a callback" - possibly relating to [this other stackoverflow](https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function#:~:text=There's%20no%20place%20for%20returned,attention%20to%20the%20return%20value.&text=Yes%2C%20it%20makes%20fun%20sense,Unfortunately%2C%20it%20is%20not%20possible.) wherein "you cannot return from an asynchronous call inside a synchronous method".   
-  - _Clearly a gap in my understanding here!_ One to pick up and go over in detail until I can understand what was going wrong.   
+  - _Clearly a gap in my understanding here!_ One to pick up and go over in detail until I can understand what was going wrong.     
+
+  ## Project log (detail):      
+- [Link to detailed project build log here](https://github.com/hphilpotts/veg-app-backend/blob/main/buildLog.md)    

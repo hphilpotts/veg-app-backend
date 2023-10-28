@@ -46,9 +46,9 @@ exports.week_indexByUser_put = async (req, res) => {
         });
 }
 
-exports.week_currentWeek_put = (req, res) => {
+exports.week_currentWeek_put = async (req, res) => {
     const { userOwner } = req.body;
-    Week.findOne({ userOwner, weekCommencing })
+    await Week.findOne({ userOwner, weekCommencing })
         .then(Week => {
             res.json({ Week }).status(200);
         })

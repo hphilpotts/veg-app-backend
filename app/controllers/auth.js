@@ -99,7 +99,7 @@ exports.auth_signin = async (req, res) => {
             { expiresIn: '3 days' },
             (err, token) => {
                 if (err) throw err;
-                res.json({ token, "message": "login successful!" }).status(200);
+                res.json({ token, body: user, "message": "login successful!" }).status(200);
             }
         );
 

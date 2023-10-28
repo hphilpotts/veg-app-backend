@@ -59,9 +59,9 @@ Submit a pull request for any proposed changes.
 --- 
 ## Jump to:   
 - [Issues, future features, questions](https://github.com/hphilpotts/veg-app-backend#current-issues-to-resolve)    
-- [Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-apis)    
-- [Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-apis)    
-- [Week API overview](https://github.com/hphilpotts/veg-app-backend#week-apis)    
+- [Auth API overview](https://github.com/hphilpotts/veg-app-backend#auth-api-requests)    
+- [Food-item API overview](https://github.com/hphilpotts/veg-app-backend#food-item-api-requests)    
+- [Week API overview](https://github.com/hphilpotts/veg-app-backend#week-api-requests)    
 - [Project Build Log](https://github.com/hphilpotts/veg-app-backend#project-log-detail)    
 
 ---
@@ -86,7 +86,8 @@ _All request bodies to be sent in JSON format._
 
 #### POST - User Sign In    
 `auth/signin`   
-- Retrieve signed JWT `token` if successful.   
+- Retrieve signed JWT `token` if successful.  
+- Also returns `user` object within response body. 
 - Request body: `emailAddress, password` from form submission.    
 
 ### **FOOD-ITEM API requests**:    

@@ -5,13 +5,6 @@ const salt = 10;
 
 exports.auth_signup = async (req, res) => {
 
-    // TODO - handle further password restrictions in frontend
-
-    // ! debug
-    console.log('Creating new user...')
-    console.log('user from fe:')
-    console.log(req.body);
-
     const { userName, emailAddress, password } = req.body;
 
     try {
@@ -40,27 +33,7 @@ exports.auth_signup = async (req, res) => {
 
         await user.save()
             .then(() => {
-
-                const payload = {
-                    user: {
-                        id: user._id,
-                        username: user.userName
-                    }
-                };
-
-                console.log(payload);
-
-                jwt.sign(
-                    payload,
-                    process.env.SECRET,
-                    { expiresIn: '3 days' },
-                    (err, token) => {
-                        if (err) throw err;
-                        console.log(token);
-                        res.json({ token, "message": "User created sucessfully!" }).status(201);
-                    }
-                );
-
+                res.status(201).json({ body: user, "message": "User created sucessfully!" });
             })
             .catch((err) => {
                 console.log(err);
@@ -79,11 +52,11 @@ exports.auth_signin = async (req, res) => {
     try {
         const user = await User.findOne({ emailAddress });
         if (!user) {
-            return res.json({ "message": "User not found" }).status(400);
+            return res.status(400).json({ "message": "User not found" });
         }
         const isMatch = await bcrypt.compareSync(password, user.password);
         if (!isMatch) {
-            return res.json({ "message": "Password does not match user" }).status(400);
+            return res.status(400).json({ "message": "Password does not match user" });
         }
 
         const payload = {
@@ -99,13 +72,13 @@ exports.auth_signin = async (req, res) => {
             { expiresIn: '3 days' },
             (err, token) => {
                 if (err) throw err;
-                res.json({ token, body: user, "message": "login successful!" }).status(200);
+                res.status(200).json({ token, body: user.username, "message": "login successful!" });
             }
         );
 
     }
     catch (error) {
-        res.json({ "message": "you are not logged in!" }).status(400);
+        res.status(400).json({ "message": "you are not logged in!" });
         console.log(error);
     }
 }

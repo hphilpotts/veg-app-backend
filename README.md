@@ -81,7 +81,7 @@ _All request bodies to be sent in JSON format._
 
 #### POST - User Sign Up    
 `/auth/signup`   
-- Create user, respond with signed JWT `token` if successful.   
+- Create user, respond with status `201` and `user` object within response body if successful.   
 - Request body: `userName, emailAddress, password` from form submission.    
 
 #### POST - User Sign In    

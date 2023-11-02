@@ -106,6 +106,11 @@ _All Food-item routes protected by JWT checks:_
 `foodItem/index`    
 - Get all Food-items from collection.   
 
+#### GET Food-item Category Index    
+`foodItem/category/:category`    
+- Get all Food-items from a specific category.   
+- Requires a `category` URL param .
+
 #### PUT Retrieve Food-item Detail    
 `foodItem/detail`   
 - Get Food-item by document ID.   

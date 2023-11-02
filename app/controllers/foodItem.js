@@ -47,6 +47,18 @@ exports.foodItem_index_get = (req, res) => {
         })
 }
 
+exports.foodItem_category_get = (req, res) => {
+    const category = req.params.category;
+    FoodItem.find({ category })
+        .then(foodItems => {
+            res.status(200).json({ foodItems });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(400).send(err);
+        })
+}
+
 exports.foodItem_detail_put = (req, res) => {
     FoodItem.findById(req.body.id)
         .then(foundItem => {

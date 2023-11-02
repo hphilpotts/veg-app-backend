@@ -11,6 +11,7 @@ const authorisationCheck = require('../middleware/authorisation');
 router.post('/foodItem/add', isLoggedInCheck, foodItemController.foodItem_create_post);
 
 router.get('/foodItem/index', foodItemController.foodItem_index_get);
+router.get('/foodItem/category/:category', foodItemController.foodItem_category_get);
 
 router.put('/foodItem/detail', isLoggedInCheck, foodItemController.foodItem_detail_put);
 router.put('/foodItem/userAddedBy', isLoggedInCheck, foodItemController.foodItem_byUser_put);

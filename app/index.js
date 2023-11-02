@@ -9,7 +9,7 @@ const app = express();
 
 // Import routes:
 const authRouter = require('./routes/auth');
-const foodItemRouter = require('./routes/food-item');
+const foodItemRouter = require('./routes/foodItem');
 const weekRouter = require('./routes/week');
 
 // Mount router:

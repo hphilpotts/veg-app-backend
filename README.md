@@ -6,7 +6,7 @@ This is a MongoDB-linked Node.js backend app which uses the Express framework. I
 ## What does it do?   
 It allows front-end app users to sign up / sign in and then track their daily and weekly intake of fruits, vegetables, nuts & seeds and grains by inputting "food items" that they have eaten.    
 
-There is full CRUD functionality for the `Food-item` and `Week` models. Routes are protected through `JWT`-based authorisation which prevents unauthorised operations on other users' documents.
+There is full CRUD functionality for the `FoodItem` and `Week` models. Routes are protected through `JWT`-based authorisation which prevents unauthorised operations on other users' documents.
 
 ## Why have I built this?   
 I have built this as part of my portfolio of side projects. Aims for this project were as follows:   
@@ -95,7 +95,7 @@ _All request bodies to be sent in JSON format._
 _All request bodies to be sent in JSON format._   
 
 _All Food-item routes protected by JWT checks:_    
-- Request headers on all routes must include `x-auth-token` containing a valid JWT.    
+- Request headers on all routes except GET requests must include `x-auth-token` containing a valid JWT.    
 
 #### POST Food-item Add   
 `foodItem/add`    

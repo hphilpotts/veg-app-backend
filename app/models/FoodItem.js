@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 const foodItemCategories = ['green vegetables', 'salad vegetables', 'salad leaves', 'root vegetables', 'onions & friends', 'berries', 'orchard fruits', 'citrus fruits', 'exotic fruits', 'grains', 'nuts & seeds', 'miscellaneous'];
 
 const foodItemSchema = mongoose.Schema({
-    userOwner: { type: mongoose.Types.ObjectId, ref: 'User' },
-    foodItemName: {
+    addedBy: { type: mongoose.Types.ObjectId, ref: 'User' },
+    name: {
         type: String,
         required: true,
         unique: true
     },
-    foodItemCategory: {
+    category: {
         type: String,
         enum: foodItemCategories,
         required: true
     },
-    usersFavouritedBy: [{
+    favouritedBy: [{
         type: mongoose.Types.ObjectId, ref: 'User'
     }]
 

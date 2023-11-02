@@ -1,4 +1,4 @@
-const FoodItem = require('../models/Food-item');
+const FoodItem = require('../models/FoodItem');
 
 exports.foodItem_create_post = async (req, res) => {
     const { foodItemName, foodItemCategory, userOwner } = req.body;

@@ -1,31 +1,31 @@
 const FoodItem = require('../models/FoodItem');
 
 exports.foodItem_create_post = async (req, res) => {
-    const { foodItemName, foodItemCategory, userOwner } = req.body;
+    const { name, category, addedBy } = req.body;
 
     try {
 
-        if (foodItemName === undefined || foodItemCategory === undefined) {
-            return res.json({ "message": "Unable to add item - name or category missing" }).status(400);
+        if (name === undefined || category === undefined) {
+            return res.status(400).json({ "message": "Unable to add item - name or category missing" });
         }
 
-        existingFoodItem = await FoodItem.findOne({ foodItemName });
+        existingFoodItem = await FoodItem.findOne({ name });
         if (existingFoodItem) {
-            return res.json({ "message": "Unable to add item - this item already exists!" }).status(403);
+            return res.status(403).json({ "message": "Unable to add item - this item already exists!" });
         }
 
         const newFoodItem = new FoodItem({
-            foodItemName,
-            foodItemCategory,
-            userOwner
+            name,
+            category,
+            addedBy
         });
 
         await newFoodItem.save()
             .then(() => {
-                res.json({ "message": "New food added successfully!" }).status(201);
+                res.status(201).json({ "message": "New food added successfully!" });
             }).catch((err) => {
                 console.error(err);
-                res.json({ "message": "Unable to add item - please try again later." }).status(400);
+                res.status(400).json({ "message": "Unable to add item - please try again later." });
             })
 
     } catch (err) {

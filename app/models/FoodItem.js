@@ -9,6 +9,10 @@ const foodItemSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    icon: {
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         enum: foodItemCategories,

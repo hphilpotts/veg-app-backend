@@ -1,7 +1,7 @@
 const FoodItem = require('../models/FoodItem');
 
 exports.foodItem_create_post = async (req, res) => {
-    const { name, category, addedBy } = req.body;
+    const { name, category, addedBy, icon } = req.body;
 
     try {
 
@@ -17,6 +17,7 @@ exports.foodItem_create_post = async (req, res) => {
         const newFoodItem = new FoodItem({
             name,
             category,
+            icon,
             addedBy
         });
 

@@ -60,6 +60,20 @@ exports.foodItem_category_get = (req, res) => {
         })
 }
 
+exports.foodItem_favourites_get = (req, res) => {
+    const user = req.params.user;
+    console.log(user);
+    FoodItem.find({ favouritedBy: user })
+        .then(foodItems => {
+            console.log(foodItems);
+            res.json({ foodItems }).status(200);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ "message": "Error finding a user's favourite foods, please try again later" }).status(400);
+        })
+}
+
 exports.foodItem_detail_put = (req, res) => {
     FoodItem.findById(req.body.id)
         .then(foundItem => {
@@ -79,17 +93,6 @@ exports.foodItem_byUser_put = (req, res) => {
         .catch(err => {
             console.error(err);
             res.json({ "message": "Error finding food added by a specific user, please try again later" }).status(400);
-        })
-}
-
-exports.foodItem_favourites_put = (req, res) => {
-    FoodItem.find({ usersFavouritedBy: req.body.usersFavouritedBy })
-        .then(usersFavourites => {
-            res.json({ usersFavourites }).status(200);
-        })
-        .catch(err => {
-            console.error(err);
-            res.json({ "message": "Error finding a user's favourite foods, please try again later" }).status(400);
         })
 }
 

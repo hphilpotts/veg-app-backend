@@ -1,35 +1,22 @@
-// Require statements:
 const express = require("express");
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const databaseConnection = require('./utils/connect-local-mongodb');
-
-// Invoke the express app module functionality:
 const app = express();
 
-// Import routes:
 const authRouter = require('./routes/auth');
 const foodItemRouter = require('./routes/foodItem');
 const weekRouter = require('./routes/week');
 
-// Mount router:
 app.use('/', authRouter);
 app.use('/', foodItemRouter);
 app.use('/', weekRouter);
 
-// Root route test:
-app.get('/', (req, res) => {
-    res.json({ "response": "This is the root" });
-    res.status(200);
-})
-
-//Connect to db and check status: 
+const databaseConnection = require('./utils/connect-local-mongodb');
 databaseConnection.makeLocalDBConnection();
 databaseConnection.checkDBConnectionStatus();
 
-// Middleware:
-app.use(bodyParser.json());
+const cors = require('cors');
 app.use(cors());
 
-// Export for use in server.js
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 module.exports = { app };

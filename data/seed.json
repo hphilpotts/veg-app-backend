@@ -1,0 +1,138 @@
+{
+    "Green Vegetables": [
+        "Spinach",
+        "Kale",
+        "Broccoli",
+        "Zucchini",
+        "Brussel sprouts",
+        "Cucumber",
+        "Fennel",
+        "Asparagus",
+        "Green beans",
+        "Celery"
+    ],
+    "Salad Vegetables": [
+        "Tomatoes",
+        "Red bell peppers",
+        "Yellow bell peppers",
+        "Cucumber"
+    ],
+    "Salad Leaves": [
+        "Arugula",
+        "Spinach",
+        "Kale",
+        "Lettuce"
+    ],
+    "Root Vegetables": [
+        "Beets",
+        "Carrots"
+    ],
+    "Onions & Friends": [
+        "Garlic",
+        "Onions",
+        "Shallots",
+        "Leeks"
+    ],
+    "Legumes & Pulses": [
+        "Lentils",
+        "Chickpeas",
+        "Black beans"
+    ],
+    "Nuts & Seeds": [
+        "Almonds",
+        "Chia seeds",
+        "Walnuts",
+        "Cashews",
+        "Pumpkin seeds",
+        "Sunflower seeds",
+        "Hemp seeds",
+        "Flax seeds",
+        "Sesame seeds",
+        "Poppy seeds"
+    ],
+    "Grains & Cereals": [
+        "Quinoa"
+    ],
+    "Orchard Fruits": [
+        "Apples",
+        "Pears"
+    ],
+    "Citrus Fruits": [
+        "Oranges",
+        "Lemons",
+        "Limes",
+        "Grapefruits"
+    ],
+    "Exotic Fruits": [
+        "Mangoes",
+        "Pineapple",
+        "Bananas",
+        "Papaya",
+        "Kiwi",
+        "Pomegranate"
+    ],
+    "Berries": [
+        "Strawberries",
+        "Blueberries",
+        "Raspberries",
+        "Blackberries",
+        "Cranberries"
+    ],
+    "Other Fruits": [
+        "Avocado",
+        "Watermelon",
+        "Cantaloupe",
+        "Honeydew melon",
+        "Grapes",
+        "Dates",
+        "Figs",
+        "Coconut",
+        "Olives"
+    ],
+    "Herbs": [
+        "Dill",
+        "Parsley",
+        "Basil",
+        "Cilantro",
+        "Mint",
+        "Thyme",
+        "Rosemary",
+        "Sage",
+        "Oregano",
+        "Bay leaves",
+        "Tarragon",
+        "Marjoram"
+    ],
+    "Spices": [
+        "Cinnamon",
+        "Turmeric",
+        "Ginger",
+        "Cloves",
+        "Cardamom",
+        "Cumin",
+        "Coriander",
+        "Mustard seeds",
+        "Chili peppers",
+        "Paprika",
+        "Saffron"
+    ],
+    "Sweeteners": [
+        "Agave syrup",
+        "Maple syrup",
+        "Molasses"
+    ],
+    "Oils": [
+        "Coconut oil",
+        "Olive oil",
+        "Avocado oil",
+        "Almond oil",
+        "Flaxseed oil",
+        "Sunflower oil",
+        "Sesame oil"
+    ],
+    "Miscellaneous": [
+        "Tofu",
+        "Nutritional yeast",
+        "Vanilla"
+    ]
+}

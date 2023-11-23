@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const makeLocalDBConnection = () => {
+
         mongoose.set('strictQuery', true); // this and second param in .connect() below prevent deprecation warnings
+
         const mongoDBLocalURL = process.env.MONGODB_LOCAL_URL;
+
         mongoose.connect(mongoDBLocalURL, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
                 if (mongoose.connection.name === undefined) {
                         console.error('Mongoose connection with MongoDB not established!');
@@ -11,6 +14,7 @@ const makeLocalDBConnection = () => {
                         console.log('Connected to local MongoDB! Database:', mongoose.connection.name, 'on PORT', mongoose.connection.port);
                 }
         });
+
 };
 
 const checkDBConnectionStatus = () => {

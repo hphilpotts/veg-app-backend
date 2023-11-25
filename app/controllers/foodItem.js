@@ -81,41 +81,19 @@ exports.foodItem_edit_post = (req, res) => {
         });
 };
 
-exports.foodItem_updateFavourites_post = async (req, res) => {
+exports.foodItem_updateFavourites_post = (req, res) => {
     // TODO revise and restructure
-    const id = req.body.id;
-    const user = req.body.userOwner;
-
-    try {
-        const foundItem = await FoodItem.findById(id);
-
-        if (foundItem.usersFavouritedBy.includes(user)) {
-            try {
-                foundItem.usersFavouritedBy.pull(user);
-                foundItem.save();
-                res.json({ "message": "User has unfavourited this item." }).status(200);
-            } catch (err) {
-                console.error(err);
-                res.json({ "message": "Error removing item from favourites." }).status(400);
-            }
-
-        } else {
-            try {
-                foundItem.usersFavouritedBy.addToSet(user);
-                foundItem.save();
-                res.json({ "message": "User has favourited this item!" }).status(200);
-            } catch (err) {
-                console.error(err);
-                res.json({ "message": "Error adding item to favourites." }).status(400);
-            }
-        }
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('server error');
-    }
-
-}
+    FoodItem.findById(req.query.id)
+        .then(foodItem => {
+            foodItem.favourited = !foodItem.favourited;
+            foodItem.save();
+            res.status(200).json({ "message": "Food item favourite status updated successfully!" });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(400).json({ "message": "Error updating food item favourite status" });
+        });
+};
 
 exports.foodItem_deleteById = async (req, res) => {
     FoodItem.findByIdAndDelete(req.query.id)

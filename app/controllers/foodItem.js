@@ -19,7 +19,7 @@ exports.foodItem_index_get = (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(400).json({ "message": "Error getting food items, please try again later." });
+            res.status(400).json({ "message": "Error getting all food items, please try again later." });
         });
 };
 
@@ -42,31 +42,31 @@ exports.foodItem_favourites_get = (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(400).json({ "message": "Error retrieving favourited foods, please try again later" });
+            res.status(400).json({ "message": "Error getting all favourited foods, please try again later" });
         });
 };
 
-exports.foodItem_detail_put = (req, res) => {
-    FoodItem.findById(req.body.id) // TODO use req.params and change to HTTP GET
-        .then(foundItem => {
-            res.json({ foundItem }).status(200);
+exports.foodItem_userAdded_get = (req, res) => {
+    FoodItem.find({ addedByUser })
+        .then(foodItems => {
+            res.status(200).json({ foodItems });
         })
         .catch(err => {
             console.error(err);
-            res.json({ "message": "Error finding food by name, please try again later." }).status(400);
-        })
-}
+            res.status(400).json({ "message": "Error getting foods added by the user, please try again later" });
+        });
+};
 
-exports.foodItem_byUser_put = (req, res) => {
-    FoodItem.find({ userOwner: req.body.userOwner }) // TODO use req.params and change to HTTP GET
-        .then(usersItems => {
-            res.json({ usersItems }).status(200);
+exports.foodItem_detail_get = (req, res) => {
+    FoodItem.findById(req.query.id)
+        .then(foodItem => {
+            res.status(200).json({ foodItem });
         })
         .catch(err => {
             console.error(err);
-            res.json({ "message": "Error finding food added by a specific user, please try again later" }).status(400);
-        })
-}
+            res.status(400).json({ "message": "Error getting food details, please try again later." });
+        });
+};
 
 exports.foodItem_edit_post = (req, res) => {
     FoodItem.findById(req.query.id)

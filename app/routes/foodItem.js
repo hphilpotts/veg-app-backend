@@ -12,10 +12,9 @@ router.post('/foodItem/add', isLoggedInCheck, foodItemController.foodItem_create
 
 router.get('/foodItem/index', foodItemController.foodItem_index_get);
 router.get('/foodItem/category/:category', foodItemController.foodItem_categoryIndex_get);
-router.get('/foodItem/favourites/:user', isLoggedInCheck, foodItemController.foodItem_favourites_get);
-
-router.put('/foodItem/detail', isLoggedInCheck, foodItemController.foodItem_detail_put);
-router.put('/foodItem/userAddedBy', isLoggedInCheck, foodItemController.foodItem_byUser_put);
+router.get('/foodItem/favourites/:user', foodItemController.foodItem_favourites_get);
+router.get('/foodItem/userAddedBy', foodItemController.foodItem_userAdded_get);
+router.get('/foodItem/detail/:id', foodItemController.foodItem_detail_get);
 
 router.post('/foodItem/edit/:id', authorisationCheck, foodItemController.foodItem_edit_post);
 router.post('/foodItem/favourite', authorisationCheck, foodItemController.foodItem_updateFavourites_post);

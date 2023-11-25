@@ -40,7 +40,7 @@ const foodItemSchema = mongoose.Schema({
         type: Boolean,
         default: false
     }
-});z
+});
 
 const FoodItem = mongoose.model("FoodItem", foodItemSchema);
 

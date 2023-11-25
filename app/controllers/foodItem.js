@@ -6,7 +6,7 @@ exports.foodItem_create_post = async (req, res) => {
         .then(() => {
             res.status(201).json({ "message": "New food added successfully!" });
         })
-        .catch((err) => {
+        .catch(err => {
             console.error(err);
             res.status(400).json({ "message": "Unable to add item - please try again later." });
         });
@@ -15,15 +15,15 @@ exports.foodItem_create_post = async (req, res) => {
 exports.foodItem_index_get = (req, res) => {
     FoodItem.find()
         .then(foodItems => {
-            res.json({ foodItems }).status(200);
+            res.status(200).json({ foodItems });
         })
         .catch(err => {
             console.error(err);
-            res.json({ "message": "Error getting food items, please try again later." }).status(400);
-        })
-}
+            res.status(400).json({ "message": "Error getting food items, please try again later." });
+        });
+};
 
-exports.foodItem_category_get = (req, res) => {
+exports.foodItem_categoryIndex_get = (req, res) => {
     const category = req.params.category;
     FoodItem.find({ category })
         .then(foodItems => {
@@ -32,25 +32,22 @@ exports.foodItem_category_get = (req, res) => {
         .catch(err => {
             console.error(err);
             res.status(400).send(err);
-        })
-}
+        });
+};
 
 exports.foodItem_favourites_get = (req, res) => {
-    const user = req.params.user;
-    console.log(user);
-    FoodItem.find({ favouritedBy: user })
+    FoodItem.find({ favourited }) // TODO test if this works
         .then(foodItems => {
-            console.log(foodItems);
-            res.json({ foodItems }).status(200);
+            res.status(200).json({ foodItems });
         })
         .catch(err => {
             console.error(err);
-            res.json({ "message": "Error finding a user's favourite foods, please try again later" }).status(400);
-        })
-}
+            res.status(400).json({ "message": "Error retrieving favourited foods, please try again later" });
+        });
+};
 
 exports.foodItem_detail_put = (req, res) => {
-    FoodItem.findById(req.body.id)
+    FoodItem.findById(req.body.id) // TODO use req.params and change to HTTP GET
         .then(foundItem => {
             res.json({ foundItem }).status(200);
         })
@@ -61,7 +58,7 @@ exports.foodItem_detail_put = (req, res) => {
 }
 
 exports.foodItem_byUser_put = (req, res) => {
-    FoodItem.find({ userOwner: req.body.userOwner })
+    FoodItem.find({ userOwner: req.body.userOwner }) // TODO use req.params and change to HTTP GET
         .then(usersItems => {
             res.json({ usersItems }).status(200);
         })
@@ -71,25 +68,21 @@ exports.foodItem_byUser_put = (req, res) => {
         })
 }
 
-// U
-
 exports.foodItem_edit_post = (req, res) => {
-    const id = req.body.id;
-    const userOwner = req.body.userOwner;
-    FoodItem.findOneAndUpdate({ id, userOwner }, req.body, {
-        new: true
-    })
-        .then(() => {
-            res.json({ "message": "Food item updated successfully!" }).status(200);
+    FoodItem.findById(req.query.id)
+        .then(foodItemEditing => {
+            for (const key in req.body) foodItemEditing[key] = req.body[key];
+            foodItemEditing.save();
+            res.status(200).json({ "message": "Food item updated successfully!" });
         })
         .catch(err => {
             console.error(err);
-            res.json({ "message": "Error updating food item, please try again later." }).status(400);
-        })
-}
+            res.status(400).json({ "message": "Error updating food item, please try again later." });
+        });
+};
 
 exports.foodItem_updateFavourites_post = async (req, res) => {
-
+    // TODO revise and restructure
     const id = req.body.id;
     const user = req.body.userOwner;
 
@@ -125,12 +118,12 @@ exports.foodItem_updateFavourites_post = async (req, res) => {
 }
 
 exports.foodItem_deleteById = async (req, res) => {
-    const { id, userOwner } = req.body;
-    try {
-        await FoodItem.findOne(id, userOwner).deleteOne();
-        res.json({ "message": "Food item successfully deleted." }).status(200);
-    } catch (err) {
-        console.error(err);
-        res.json({ "message": "Error deleting item." }).status(400);
-    }
-}
+    FoodItem.findByIdAndDelete(req.query.id)
+        .then(() => {
+            res.status(200).json({ "message": "Food item successfully deleted." });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(400).json({ "message": "Error deleting item." });
+        });
+};

@@ -32,9 +32,9 @@ const foodItemSchema = mongoose.Schema({
         enum: foodItemCategories,
         required: true
     },
-    addedBy: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
+    addedByUser: {
+        type: Boolean,
+        default: true
     },
     favourited: {
         type: Boolean,

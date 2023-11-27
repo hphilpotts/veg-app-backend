@@ -2,22 +2,22 @@ const mongoose = require('mongoose');
 
 const WeekSchema = mongoose.Schema({
 
-    userOwner: { type: mongoose.Types.ObjectId, ref: 'User' },
+    user: { type: mongoose.Types.ObjectId, ref: 'User' },
 
-    0: [],
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: [],
+    monday: [String],
+    tuesday: [String],
+    wednesday: [String],
+    thursday: [String],
+    friday: [String],
+    saturday: [String],
+    sunday: [String],
 
     weekCommencing: Date
     
 },
-    {
-        timestamps: true,
-    });
+{
+    timestamps: true,
+});
 
 const Week = mongoose.model("Week", WeekSchema);
 

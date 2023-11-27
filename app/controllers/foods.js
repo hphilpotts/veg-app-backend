@@ -42,7 +42,7 @@ exports.foods_document_get = (req, res) => {
         });
 };
 
-exports.foods_newItem_post = (req, res) => {
+exports.foods_addItem_post = (req, res) => {
     const { user, category, item } = { ...req.query };
     Foods.findOne({ user })
         .then(Foods => {
@@ -53,6 +53,20 @@ exports.foods_newItem_post = (req, res) => {
         .catch(err => {
             console.error(err);
             res.status(400).json({ "message": "Error updating user's Foods, please try again later." });
+        });
+};
+
+exports.foods_removeItem_post = (req, res) => {
+    const { user, category, item } = { ...req.query };
+    Foods.findOne({ user })
+        .then(Foods => {
+            Foods[category] = Foods[category].filter(element => element != item);
+            Foods.save();
+            res.status(200).json({ "message": "Item successfully removed from Foods document" });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(400).json({ "message": "Error removing food item, please try again later." });
         });
 };
 

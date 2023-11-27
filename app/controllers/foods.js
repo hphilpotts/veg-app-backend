@@ -19,9 +19,11 @@ const populateFoodsDefaults = foodsDocument => {
     Object.keys(defaultFoods).map(category => foodsDocument[category] = defaultFoods[category]);
 };
 
-exports.foods_byUser_get = (req, res) => {
-    Foods.findOne({ user: req.query.user })
+exports.foods_document_get = (req, res) => {
+    const { user, category } = { ...req.query }
+    Foods.findOne({ user })
         .then(Foods => {
+            if (category) Foods = Foods[category];
             res.status(200).json({ Foods });
         })
         .catch(err => {
@@ -29,51 +31,6 @@ exports.foods_byUser_get = (req, res) => {
             res.status(400).json({ "message": "Error getting user's Foods, please try again later." });
         });
 };
-
-// exports.foodItem_categoryIndex_get = (req, res) => {
-//     const category = req.params.category;
-//     FoodItem.find({ category })
-//         .then(foodItems => {
-//             res.status(200).json({ foodItems });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).send(err);
-//         });
-// };
-
-// exports.foodItem_favourites_get = (req, res) => {
-//     FoodItem.find({ favourited })
-//         .then(foodItems => {
-//             res.status(200).json({ foodItems });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error getting all favourited foods, please try again later" });
-//         });
-// };
-
-// exports.foodItem_userAdded_get = (req, res) => {
-//     FoodItem.find({ addedByUser })
-//         .then(foodItems => {
-//             res.status(200).json({ foodItems });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error getting foods added by the user, please try again later" });
-//         });
-// };
-
-// exports.foodItem_detail_get = (req, res) => {
-//     FoodItem.findById(req.query.id)
-//         .then(foodItem => {
-//             res.status(200).json({ foodItem });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error getting food details, please try again later." });
-//         });
-// };
 
 // exports.foodItem_edit_post = (req, res) => {
 //     FoodItem.findById(req.query.id)

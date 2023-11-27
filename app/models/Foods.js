@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const FoodsSchema = mongoose.Schema({
-    user: { type: mongoose.Types.ObjectId, ref: 'User' },
+    user: { type: mongoose.Types.ObjectId, ref: 'User', unique: true },
     greenVegetables: [String],
     saladVegetables: [String],
     saladLeaves: [String],

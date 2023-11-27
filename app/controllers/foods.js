@@ -3,16 +3,26 @@ const Foods = require('../models/Foods');
 const defaultFoods = require('../../data/seed.json');
 
 exports.foods_create_post = async (req, res) => {
+
+    let userHasCollection = Boolean(await Foods.exists({ user: req.body.user }));
+
+    if (userHasCollection) {
+        res.status(400).json({ "message": "User already has associated Foods document." });
+        return;
+    };
+
     const intialFoods = new Foods;
     intialFoods.user = req.body.user;
     populateFoodsDefaults(intialFoods);
+
     try {
         intialFoods.save();
-        res.status(201).json({ "message": "New food added successfully!" });
+        res.status(201).json({ "message": "New Foods document created successfully!" });
     } catch (err) {
         console.error(err);
-        res.status(400).json({ "message": "Unable to add item - please try again later." });
+        res.status(400).json({ "message": "Error creating new Foods document - please try again later." });
     };
+
 };
 
 const populateFoodsDefaults = foodsDocument => {

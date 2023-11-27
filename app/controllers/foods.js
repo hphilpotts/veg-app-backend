@@ -30,7 +30,7 @@ const populateFoodsDefaults = foodsDocument => {
 };
 
 exports.foods_document_get = (req, res) => {
-    const { user, category } = { ...req.query }
+    const { user, category } = { ...req.query };
     Foods.findOne({ user })
         .then(Foods => {
             if (category) Foods = Foods[category];
@@ -39,6 +39,20 @@ exports.foods_document_get = (req, res) => {
         .catch(err => {
             console.error(err);
             res.status(400).json({ "message": "Error getting user's Foods, please try again later." });
+        });
+};
+
+exports.foods_newItem_post = (req, res) => {
+    const { user, category, item } = { ...req.query };
+    Foods.findOne({ user })
+        .then(Foods => {
+            Foods[category].push(item);
+            Foods.save();
+            res.status(200).json({ "message": "New item added to Foods document" });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(400).json({ "message": "Error updating user's Foods, please try again later." });
         });
 };
 
@@ -52,20 +66,6 @@ exports.foods_document_get = (req, res) => {
 //         .catch(err => {
 //             console.error(err);
 //             res.status(400).json({ "message": "Error updating food item, please try again later." });
-//         });
-// };
-
-// exports.foodItem_updateFavourites_post = (req, res) => {
-//     // TODO revise and restructure
-//     FoodItem.findById(req.query.id)
-//         .then(foodItem => {
-//             foodItem.favourited = !foodItem.favourited;
-//             foodItem.save();
-//             res.status(200).json({ "message": "Food item favourite status updated successfully!" });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error updating food item favourite status" });
 //         });
 // };
 

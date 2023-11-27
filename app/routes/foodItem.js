@@ -4,21 +4,21 @@ const router = express.Router();
 
 router.use(express.json());
 
-const foodItemController = require('../controllers/foodItem');
+const foodsController = require('../controllers/foods');
 const isLoggedInCheck = require('../middleware/authentication');
 const authorisationCheck = require('../middleware/authorisation');
 
-router.post('/foods/create', foodItemController.foods_create_post);
+router.post('/foods/create', foodsController.foods_create_post);
 
-// router.get('/foodItem/index', foodItemController.foodItem_index_get);
-// router.get('/foodItem/category/:category', foodItemController.foodItem_categoryIndex_get);
-// router.get('/foodItem/favourites', foodItemController.foodItem_favourites_get);
-// router.get('/foodItem/userAdded', foodItemController.foodItem_userAdded_get);
-// router.get('/foodItem/detail/:id', foodItemController.foodItem_detail_get);
+router.get('/foods/all/', foodsController.foods_byUser_get);
+// router.get('/foodItem/category/:category', foodsController.foodItem_categoryIndex_get);
+// router.get('/foodItem/favourites', foodsController.foodItem_favourites_get);
+// router.get('/foodItem/userAdded', foodsController.foodItem_userAdded_get);
+// router.get('/foodItem/detail/:id', foodsController.foodItem_detail_get);
 
-// router.post('/foodItem/edit/:id', authorisationCheck, foodItemController.foodItem_edit_post);
-// router.post('/foodItem/favourite/:id', authorisationCheck, foodItemController.foodItem_updateFavourites_post);
+// router.post('/foodItem/edit/:id', authorisationCheck, foodsController.foodItem_edit_post);
+// router.post('/foodItem/favourite/:id', authorisationCheck, foodsController.foodItem_updateFavourites_post);
 
-// router.delete('/foodItem/delete/:id', authorisationCheck, foodItemController.foodItem_deleteById);
+// router.delete('/foodItem/delete/:id', authorisationCheck, foodsController.foodItem_deleteById);
 
 module.exports = router;

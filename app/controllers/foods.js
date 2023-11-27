@@ -5,7 +5,7 @@ const defaultFoods = require('../../data/seed.json');
 exports.foods_create_post = async (req, res) => {
     const intialFoods = new Foods;
     intialFoods.user = req.body.user;
-    populateFoodsDefaults(intialFoods)
+    populateFoodsDefaults(intialFoods);
     try {
         intialFoods.save();
         res.status(201).json({ "message": "New food added successfully!" });
@@ -19,16 +19,16 @@ const populateFoodsDefaults = foodsDocument => {
     Object.keys(defaultFoods).map(category => foodsDocument[category] = defaultFoods[category]);
 };
 
-// exports.foodItem_index_get = (req, res) => {
-//     FoodItem.find()
-//         .then(foodItems => {
-//             res.status(200).json({ foodItems });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error getting all food items, please try again later." });
-//         });
-// };
+exports.foods_byUser_get = (req, res) => {
+    Foods.findOne({ user: req.query.user })
+        .then(Foods => {
+            res.status(200).json({ Foods });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(400).json({ "message": "Error getting user's Foods, please try again later." });
+        });
+};
 
 // exports.foodItem_categoryIndex_get = (req, res) => {
 //     const category = req.params.category;

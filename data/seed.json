@@ -1,5 +1,5 @@
 {
-    "Green Vegetables": [
+    "greenVegetables": [
         "Spinach",
         "Kale",
         "Broccoli",
@@ -11,34 +11,34 @@
         "Green beans",
         "Celery"
     ],
-    "Salad Vegetables": [
+    "saladVegetables": [
         "Tomatoes",
         "Red bell peppers",
         "Yellow bell peppers",
         "Cucumber"
     ],
-    "Salad Leaves": [
+    "saladLeaves": [
         "Arugula",
         "Spinach",
         "Kale",
         "Lettuce"
     ],
-    "Root Vegetables": [
+    "rootVegetables": [
         "Beets",
         "Carrots"
     ],
-    "Onions & Friends": [
+    "onionsAndFriends": [
         "Garlic",
         "Onions",
         "Shallots",
         "Leeks"
     ],
-    "Legumes & Pulses": [
+    "legumesAndPulses": [
         "Lentils",
         "Chickpeas",
         "Black beans"
     ],
-    "Nuts & Seeds": [
+    "nutsAndSeeds": [
         "Almonds",
         "Chia seeds",
         "Walnuts",
@@ -50,20 +50,20 @@
         "Sesame seeds",
         "Poppy seeds"
     ],
-    "Grains & Cereals": [
+    "grainsAndCereals": [
         "Quinoa"
     ],
-    "Orchard Fruits": [
+    "orchardFruits": [
         "Apples",
         "Pears"
     ],
-    "Citrus Fruits": [
+    "citrusFruits": [
         "Oranges",
         "Lemons",
         "Limes",
         "Grapefruits"
     ],
-    "Exotic Fruits": [
+    "exoticFruits": [
         "Mangoes",
         "Pineapple",
         "Bananas",
@@ -71,14 +71,14 @@
         "Kiwi",
         "Pomegranate"
     ],
-    "Berries": [
+    "berries": [
         "Strawberries",
         "Blueberries",
         "Raspberries",
         "Blackberries",
         "Cranberries"
     ],
-    "Other Fruits": [
+    "otherFruits": [
         "Avocado",
         "Watermelon",
         "Cantaloupe",
@@ -89,7 +89,7 @@
         "Coconut",
         "Olives"
     ],
-    "Herbs": [
+    "herbs": [
         "Dill",
         "Parsley",
         "Basil",
@@ -103,7 +103,7 @@
         "Tarragon",
         "Marjoram"
     ],
-    "Spices": [
+    "spices": [
         "Cinnamon",
         "Turmeric",
         "Ginger",
@@ -116,12 +116,12 @@
         "Paprika",
         "Saffron"
     ],
-    "Sweeteners": [
+    "sweeteners": [
         "Agave syrup",
         "Maple syrup",
         "Molasses"
     ],
-    "Oils": [
+    "oils": [
         "Coconut oil",
         "Olive oil",
         "Avocado oil",
@@ -130,7 +130,7 @@
         "Sunflower oil",
         "Sesame oil"
     ],
-    "Miscellaneous": [
+    "miscellaneous": [
         "Tofu",
         "Nutritional yeast",
         "Vanilla"

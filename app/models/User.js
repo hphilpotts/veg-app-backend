@@ -20,16 +20,19 @@ const userSchema = mongoose.Schema({
         minlength: [6, "Your password is too short"],
         unique: false,
     },
+    foods: {
+        type: mongoose.Types.ObjectId, ref: 'Foods'
+    },
+    favourites: [String]
 },
-    {
-        timestamps: true,
-        collection: 'users'
-    });
+{
+    collection: 'users'
+});
 
 
 userSchema.methods.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
-}
+};
 
 const User = mongoose.model("User", userSchema);
 

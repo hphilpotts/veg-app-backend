@@ -43,7 +43,7 @@ exports.foods_document_get = (req, res) => {
 };
 
 exports.foods_updateItem_post = (req, res) => {
-    const { user, category, action, item, itemToUpdate } = { ...req.query };
+    const { user, category, action, item, itemToUpdate } = { ...req.body };
     Foods.findOne({ user })
         .then(Foods => {
             switch(action) {

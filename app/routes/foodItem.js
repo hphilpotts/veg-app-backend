@@ -8,8 +8,8 @@ const foodsController = require('../controllers/foods');
 const isLoggedInCheck = require('../middleware/authentication');
 const authorisationCheck = require('../middleware/authorisation');
 
-router.post('/foods/create', foodsController.foods_create_post); // query params required: user
+router.post('/foods/create', foodsController.foods_create_post); // request body requires: user
 router.get('/foods', foodsController.foods_document_get); // query params required: user / optional: category
-router.post('/foods/update', foodsController.foods_updateItem_post); // query params required: user, category, action, item  / optional: itemToUpdate
+router.post('/foods/update', foodsController.foods_updateItem_post); // request body requires: user, category, action, item  / optional: itemToUpdate
 
 module.exports = router;

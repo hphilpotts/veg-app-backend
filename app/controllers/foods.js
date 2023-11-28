@@ -70,13 +70,13 @@ exports.foods_updateItem_post = (req, res) => {
         });
 };
 
-// exports.foodItem_deleteById = async (req, res) => {
-//     FoodItem.findByIdAndDelete(req.query.id)
-//         .then(() => {
-//             res.status(200).json({ "message": "Food item successfully deleted." });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error deleting item." });
-//         });
-// };
+exports.foods_delete_post = (req, res) => {
+    Foods.findOneAndDelete({ user: req.body.user })
+        .then(() => {
+            res.status(200).json({ "message": "User's food records successfully deleted!" });
+        })
+        .catch(error => {
+            res.status(400).json({ "message": "Error deleting user's food records, please try again later." });
+            console.error(error);
+        });
+};

@@ -11,5 +11,6 @@ const authorisationCheck = require('../middleware/authorisation');
 router.post('/foods/create', foodsController.foods_create_post); // request body requires: user
 router.get('/foods', foodsController.foods_document_get); // query params required: user / optional: category
 router.post('/foods/update', foodsController.foods_updateItem_post); // request body requires: user, category, action, item  / optional: itemToUpdate
+router.delete('/foods/delete', foodsController.foods_delete_post); // request body requires: user
 
 module.exports = router;

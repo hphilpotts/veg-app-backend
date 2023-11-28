@@ -4,79 +4,93 @@ const defaultFoods = require('../../data/seed.json');
 
 exports.foods_create_post = async (req, res) => {
 
-    let userHasCollection = Boolean(await Foods.exists({ user: req.body.user }));
-
-    if (userHasCollection) {
-        res.status(400).json({ "message": "User already has associated Foods document." });
-        return;
+    let userAlreadyHasCollection = Boolean(await Foods.exists({ user: req.body.user }));
+    if (userAlreadyHasCollection) {
+        return res.status(400).json({ "message": `User ${req.body.user} already has associated Foods document.` });
     };
 
-    const intialFoods = new Foods;
-    intialFoods.user = req.body.user;
-    populateFoodsDefaults(intialFoods);
+    const newFoodsDocument = new Foods;
+    newFoodsDocument.user = req.body.user;
+    populateWithDefaults(newFoodsDocument, defaultFoods);
 
     try {
-        intialFoods.save();
-        res.status(201).json({ "message": "New Foods document created successfully!" });
-    } catch (err) {
-        console.error(err);
+        newFoodsDocument.save();
+        res.status(201).json({ "message": "New Foods document for user created successfully!" });
+    } catch (error) {
+        console.error(error);
         res.status(400).json({ "message": "Error creating new Foods document - please try again later." });
     };
 
 };
 
-const populateFoodsDefaults = foodsDocument => {
-    Object.keys(defaultFoods).map(category => foodsDocument[category] = defaultFoods[category]);
+const populateWithDefaults = (foodsDocument, defaultData) => {
+    Object.keys(defaultData).map(category => {
+        foodsDocument[category] = defaultData[category];
+    })
 };
 
-exports.foods_document_get = (req, res) => {
-    const { user, category } = { ...req.query };
+exports.foods_read_get = (req, res) => {
+    const { user, categoryOption } = { ...req.query };
     Foods.findOne({ user })
         .then(Foods => {
-            if (category) Foods = Foods[category];
+
+            if (categoryOption) {
+                const Category = Foods[categoryOption];
+                return res.status(200).json({ Category });
+            };
+
+            if (Foods == null) {
+                return res.status(404).json({ "message": `Food data for user ${user} not found, please try again later.` });
+            };
+
             res.status(200).json({ Foods });
+
         })
-        .catch(err => {
-            console.error(err);
-            res.status(400).json({ "message": "Error getting user's Foods, please try again later." });
+        .catch(error => {
+            console.error(error);
+            res.status(400).json({ "message": `Error getting Foods for user ${user}, please try again later.` });
         });
 };
 
-exports.foods_updateItem_post = (req, res) => {
+exports.foods_update_post = (req, res) => {
     const { user, category, action, item, itemToUpdate } = { ...req.body };
     Foods.findOne({ user })
         .then(Foods => {
-            switch(action) {
-                case "add": 
+
+            switch (action) {
+                case "add":
                     Foods[category].push(item);
                     break;
                 case "remove":
                     Foods[category] = Foods[category].filter(element => element != item);
                     break;
-                case "update":
+                case "edit":
                     Foods[category][Foods[category].indexOf(itemToUpdate)] = item;
                     break;
                 default:
-                    res.status(400).json({ "message": "Error updating document, action parameter provided not valid!" });
+                    res.status(400).json({ "message": `Error updating document, action parameter (${action}) provided not valid!` });
                     return;
             };
+
             Foods.save();
             res.status(200).json({ "message": `Successfully completed ${action} action!` });
 
         })
-        .catch(err => {
-            console.error(err);
+        .catch(error => {
+
+            console.error(error);
             res.status(400).json({ "message": "Error removing food item, please try again later." });
+
         });
 };
 
 exports.foods_delete_post = (req, res) => {
     Foods.findOneAndDelete({ user: req.body.user })
         .then(() => {
-            res.status(200).json({ "message": "User's food records successfully deleted!" });
+            res.status(200).json({ "message": `Food records for user ${req.body.user} successfully deleted!` });
         })
         .catch(error => {
-            res.status(400).json({ "message": "Error deleting user's food records, please try again later." });
+            res.status(400).json({ "message": `Error deleting food records for user ${req.body.user}, please try again later.` });
             console.error(error);
         });
 };

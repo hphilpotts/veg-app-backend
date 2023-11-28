@@ -42,46 +42,33 @@ exports.foods_document_get = (req, res) => {
         });
 };
 
-exports.foods_addItem_post = (req, res) => {
-    const { user, category, item } = { ...req.query };
+exports.foods_updateItem_post = (req, res) => {
+    const { user, category, action, item, itemToUpdate } = { ...req.query };
     Foods.findOne({ user })
         .then(Foods => {
-            Foods[category].push(item);
+            switch(action) {
+                case "add": 
+                    Foods[category].push(item);
+                    break;
+                case "remove":
+                    Foods[category] = Foods[category].filter(element => element != item);
+                    break;
+                case "update":
+                    Foods[category][Foods[category].indexOf(itemToUpdate)] = item;
+                    break;
+                default:
+                    res.status(400).json({ "message": "Error updating document, action parameter provided not valid!" });
+                    return;
+            };
             Foods.save();
-            res.status(200).json({ "message": "New item added to Foods document" });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(400).json({ "message": "Error updating user's Foods, please try again later." });
-        });
-};
+            res.status(200).json({ "message": `Successfully completed ${action} action!` });
 
-exports.foods_removeItem_post = (req, res) => {
-    const { user, category, item } = { ...req.query };
-    Foods.findOne({ user })
-        .then(Foods => {
-            Foods[category] = Foods[category].filter(element => element != item);
-            Foods.save();
-            res.status(200).json({ "message": "Item successfully removed from Foods document" });
         })
         .catch(err => {
             console.error(err);
             res.status(400).json({ "message": "Error removing food item, please try again later." });
         });
 };
-
-// exports.foodItem_edit_post = (req, res) => {
-//     FoodItem.findById(req.query.id)
-//         .then(foodItemEditing => {
-//             for (const key in req.body) foodItemEditing[key] = req.body[key];
-//             foodItemEditing.save();
-//             res.status(200).json({ "message": "Food item updated successfully!" });
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(400).json({ "message": "Error updating food item, please try again later." });
-//         });
-// };
 
 // exports.foodItem_deleteById = async (req, res) => {
 //     FoodItem.findByIdAndDelete(req.query.id)

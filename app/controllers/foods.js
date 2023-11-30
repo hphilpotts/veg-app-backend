@@ -30,12 +30,12 @@ const populateWithDefaults = (foodsDocument, defaultData) => {
 };
 
 exports.foods_read_get = (req, res) => {
-    const { user, categoryOption } = { ...req.query };
+    const { user, optionalCategoryFilter } = { ...req.query };
     Foods.findOne({ user })
         .then(Foods => {
 
-            if (categoryOption) {
-                const Category = Foods[categoryOption];
+            if (optionalCategoryFilter) {
+                const Category = Foods[optionalCategoryFilter];
                 return res.status(200).json({ Category });
             };
 
@@ -53,7 +53,7 @@ exports.foods_read_get = (req, res) => {
 };
 
 exports.foods_update_post = (req, res) => {
-    const { user, category, action, item, itemToUpdate } = { ...req.body };
+    const { user, category, action, item, itemToEdit } = { ...req.body };
     Foods.findOne({ user })
         .then(Foods => {
 
@@ -65,7 +65,7 @@ exports.foods_update_post = (req, res) => {
                     Foods[category] = Foods[category].filter(element => element != item);
                     break;
                 case "edit":
-                    Foods[category][Foods[category].indexOf(itemToUpdate)] = item;
+                    Foods[category][Foods[category].indexOf(itemToEdit)] = item;
                     break;
                 default:
                     res.status(400).json({ "message": `Error updating document, action parameter (${action}) provided not valid!` });

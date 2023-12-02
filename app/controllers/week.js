@@ -73,3 +73,14 @@ exports.week_update_post = (req, res) => {
             res.status(400).json({ "message": "Error updating Week document, please try again later" });
         });
 };
+
+exports.week_delete = (req, res) => {
+    Week.findByIdAndDelete(req.body.id)
+        .then(() => {
+            res.status(200).json({ "message": `Week successfully deleted!` });
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(400).json({ "message": "Error deleting Week, please try again later!" });
+        });
+};

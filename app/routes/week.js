@@ -11,6 +11,7 @@ const authorisationCheck = require('../middleware/authorisation');
 router.post('/week/create', weekController.week_create_post);
 router.get('/week/index', weekController.week_index_get);
 router.get('/week/find', weekController.week_byDate_get);
+router.put('/week/update', weekController.week_update_post);
 // router.get('/week/current', weekController.week_currentWeek_put);
 // router.put('/week/today', authorisationCheck, weekController.week_currentDay_put);
 // router.put('/week/detail', authorisationCheck, weekController.week_detailById_put);

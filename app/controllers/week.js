@@ -1,12 +1,12 @@
 const Week = require('../models/Week');
-const handleCurrent = require('../services/handle-current-day');
-
-const currentDay = handleCurrent.getCurrentDay();
-const weekCommencingFrom = handleCurrent.getWeekCommencing();
+const dateServices = require('../services/dates');
 
 exports.week_create_post = async (req, res) => {
-    const { user, inputDate } = req.body;
-    const weekCommencing = weekCommencingFrom(inputDate);
+    const { user, inputDate } = { ...req.body};
+    console.log("inputDate" + inputDate)
+    const weekCommencing = dateServices.getWeekCommencing(inputDate);
+
+    console.log(weekCommencing)
 
     try {
 
@@ -18,7 +18,7 @@ exports.week_create_post = async (req, res) => {
         };
 
         const newWeek = new Week({
-            userOwner,
+            user,
             weekCommencing
         });
 
@@ -37,17 +37,29 @@ exports.week_create_post = async (req, res) => {
 
 };
 
-exports.week_indexByUser_put = async (req, res) => {
-    const { userOwner } = req.body;
-    Week.find({ userOwner }).sort('-weekCommencing')
+exports.week_index_get = (req, res) => {
+    const user = req.query.user;
+    Week.find({ user }).sort('-weekCommencing')
         .then(Weeks => {
-            res.json({ Weeks }).status(200);
+            res.status(200).json({ Weeks });
         })
-        .catch(err => {
-            console.error(err);
-            res.json({ "message": "Error getting all weeks, please try again later." }).status(400);
+        .catch(error => {
+            console.console.error((error));
+            res.status(400).json({ "message": "Error getting Weeks index, please try again later." })
         });
-}
+};
+
+// exports.week_indexByUser_put = async (req, res) => {
+//     const { userOwner } = req.body;
+//     Week.find({ userOwner }).sort('-weekCommencing')
+//         .then(Weeks => {
+//             res.json({ Weeks }).status(200);
+//         })
+//         .catch(err => {
+//             console.error(err);
+//             res.json({ "message": "Error getting all weeks, please try again later." }).status(400);
+//         });
+// }
 
 exports.week_currentWeek_put = async (req, res) => {
     const { userOwner } = req.body;

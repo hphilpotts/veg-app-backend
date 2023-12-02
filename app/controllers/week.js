@@ -1,18 +1,21 @@
 const Week = require('../models/Week');
 const handleCurrent = require('../services/handle-current-day');
 
-const weekCommencing = handleCurrent.getFirstDayOfCurrentWeek();
+const currentDay = handleCurrent.getCurrentDay();
+const weekCommencingFrom = handleCurrent.getWeekCommencing();
 
 exports.week_create_post = async (req, res) => {
-    const { userOwner } = req.body;
+    const { user, inputDate } = req.body;
+    const weekCommencing = weekCommencingFrom(inputDate);
 
     try {
 
-        existingWeek = await Week.findOne({ userOwner, weekCommencing });
+        existingWeek = await Week.findOne({ user, weekCommencing });
+
         if (existingWeek) {
-            console.warn('An entry for the current week already exists!');
-            return res.json({ "message": "An entry for the current week already exists!" }).status(403);
-        }
+            console.error('An entry for the current week already exists!');
+            return res.status(403).json({ "message": "Unable to create new Week document! An entry for the week selected already exists." });
+        };
 
         const newWeek = new Week({
             userOwner,
@@ -21,18 +24,18 @@ exports.week_create_post = async (req, res) => {
 
         await newWeek.save()
             .then(() => {
-                res.json({ "message": "New week added successfully!" }).status(201);
-            }).catch((err) => {
-                console.error(err);
-                res.json({ "message": "Unable to add week - please try again later." }).status(400);
-            })
+                res.status(201).json({ "message": "New Week added successfully!" });
+            }).catch((error) => {
+                console.error(error);
+                res.status(400).json({ "message": "Unable to create Week document - please try again later." });
+            });
 
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.error(error);
         res.status(500).send('Server error');
-    }
+    };
 
-}
+};
 
 exports.week_indexByUser_put = async (req, res) => {
     const { userOwner } = req.body;
@@ -75,7 +78,7 @@ exports.week_currentDay_put = (req, res) => {
 
 exports.week_detailById_put = (req, res) => {
     const { id, userOwner } = req.body;
-    Week.findOne({id, userOwner})
+    Week.findOne({ id, userOwner })
         .then(Week => {
             res.json({ Week }).status(200);
         })
@@ -87,7 +90,7 @@ exports.week_detailById_put = (req, res) => {
 
 exports.week_dailyDetailById_put = (req, res) => {
     const { id, day, userOwner } = req.body;
-    Week.findOne({id, userOwner})
+    Week.findOne({ id, userOwner })
         .then(Week => {
             const dayDetail = Week[day];
             res.json({ dayDetail }).status(200);

@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 
 const authRouter = require('./routes/auth');
-const foodItemRouter = require('./routes/foodItem');
+const foodsRouter = require('./routes/foods');
 const weekRouter = require('./routes/week');
 
 app.use('/', authRouter);
-app.use('/', foodItemRouter);
+app.use('/', foodsRouter);
 app.use('/', weekRouter);
 
 const databaseConnection = require('./utils/connect-local-mongodb');

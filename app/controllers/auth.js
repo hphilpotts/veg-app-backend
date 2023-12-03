@@ -5,56 +5,56 @@ const salt = 10;
 
 exports.auth_signup = async (req, res) => {
 
-    const { userName, emailAddress, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
-        existingUser = await User.findOne({ emailAddress });
-        if (existingUser) {
+        existingEmail = await User.findOne({ email });
+        if (existingEmail) {
             return res.status(400).json({ "message": 'Email already exists' });
-        }
+        };
 
-        existingUser = await User.findOne({ userName });
-        if (existingUser) {
-            return res.status(400).json({ "message": 'Username already in use' });
-        }
+        existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            return res.status(400).json({ "message": 'username already in use' });
+        };
 
         if (password.length < 6) {
             return res.status(400).json({ "message": 'Password should be 6 characters or longer' });
-        }
+        };
 
-        const user = new User({
-            userName,
-            emailAddress,
+        const newUser = new User({
+            username,
+            email,
             password,
         });
 
         const hashedPassword = bcrypt.hashSync(req.body.password, salt);
-        user.password = hashedPassword;
+        newUser.password = hashedPassword;
 
-        await user.save()
+        await newUser.save()
             .then(() => {
-                res.status(201).json({ body: user, "message": "User created sucessfully!" });
+                res.status(201).json({ body: newUser, "message": "User created sucessfully!" });
             })
-            .catch((err) => {
-                console.log(err);
-                res.json({ "message": "error creating user, try again!" });
-            })
+            .catch((error) => {
+                console.error(error);
+                res.status(400).json({ "message": "error creating user, try again!" });
+            });
 
-    } catch (err) {
-        console.error(err.message);
+    } catch (error) {
+        console.error(error.message);
         res.status(500).send('Server error');
-    }
+    };
 
-}
+};
 
 exports.auth_signin = async (req, res) => {
-    const { emailAddress, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await User.findOne({ emailAddress });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ "message": "User not found" });
         }
-        const isMatch = await bcrypt.compareSync(password, user.password);
+        const isMatch = bcrypt.compareSync(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ "message": "Password does not match user" });
         }
@@ -62,7 +62,7 @@ exports.auth_signin = async (req, res) => {
         const payload = {
             user: {
                 id: user._id,
-                username: user.userName
+                username: user.username
             }
         };
 

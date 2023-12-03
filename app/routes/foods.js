@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-
 router.use(express.json());
 
 const foodsController = require('../controllers/foods');
+
 const isLoggedInCheck = require('../middleware/authentication');
 const authorisationCheck = require('../middleware/authorisation');
 

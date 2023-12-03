@@ -48,16 +48,20 @@ exports.auth_signup = async (req, res) => {
 };
 
 exports.auth_signin = async (req, res) => {
+
     const { email, password } = req.body;
+
     try {
+
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ "message": "User not found" });
-        }
-        const isMatch = bcrypt.compareSync(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ "message": "Password does not match user" });
-        }
+            return res.status(400).json({ "message": "User not found, please check email address and try again." });
+        };
+
+        const passwordMatchToEmail = bcrypt.compareSync(password, user.password);
+        if (!passwordMatchToEmail) {
+            return res.status(400).json({ "message": "Password and email do not match, please try again." });
+        };
 
         const payload = {
             user: {
@@ -70,15 +74,15 @@ exports.auth_signin = async (req, res) => {
             payload,
             process.env.SECRET,
             { expiresIn: '3 days' },
-            (err, token) => {
-                if (err) throw err;
-                res.status(200).json({ token, body: user, "message": "login successful!" });
+            (error, token) => {
+                if (error) throw error;
+                res.status(200).json({ token, body: user, "message": "Login successful!" });
             }
         );
 
-    }
-    catch (error) {
+    } catch (error) {
         res.status(400).json({ "message": "you are not logged in!" });
         console.log(error);
-    }
-}
+    };
+    
+};

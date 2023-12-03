@@ -1,16 +1,20 @@
 const Foods = require('../models/Foods');
+const User = require('../models/User');
 
 const defaultFoods = require('../../data/seed.json');
 
 exports.foods_create_post = async (req, res) => {
 
-    let userAlreadyHasCollection = Boolean(await Foods.exists({ user: req.body.user }));
+    const user = req.body.user
+
+    let userAlreadyHasCollection = Boolean(await Foods.exists({ user }));
     if (userAlreadyHasCollection) {
-        return res.status(400).json({ "message": `User ${req.body.user} already has associated Foods document.` });
+        return res.status(400).json({ "message": `User ${user} already has associated Foods document.` });
     };
 
     const newFoodsDocument = new Foods;
-    newFoodsDocument.user = req.body.user;
+    newFoodsDocument.user = user;
+    assignFoodsDocumentToUser(newFoodsDocument, user);
     populateWithDefaults(newFoodsDocument, defaultFoods);
 
     try {
@@ -28,6 +32,17 @@ const populateWithDefaults = (foodsDocument, defaultData) => {
         foodsDocument[category] = defaultData[category];
     })
 };
+
+const assignFoodsDocumentToUser = (document, user) => {
+    User.findById(user)
+        .then(User => {
+            User.foods = document._id;
+            User.save();
+        })
+        .catch(error => {
+            console.error(error);
+        })
+}
 
 exports.foods_read_get = (req, res) => {
     const { user, optionalCategoryFilter } = { ...req.query };

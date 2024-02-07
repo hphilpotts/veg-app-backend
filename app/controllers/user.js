@@ -16,18 +16,10 @@ exports.user_favourites_get = (req, res) => {
 exports.user_favourites_update_put = (req, res) => {
     const { id, foodItem } = { ...req.body };
     User.findById(id)
-        .then(User => {
-            const favourites = User.favourites;
-
-            if (favourites.includes(foodItem)) {
-                User.favourites = favourites.filter(item => item != foodItem);
-            } else {
-                User.favourites.push(foodItem)
-            }
-
+        .then(User => { // add or remove food item based on inclusion in favourites array
+            User.favourites.includes(foodItem) ? User.favourites = User.favourites.filter(item => item != foodItem) : User.favourites.push(foodItem);
             User.save();
             res.status(200).json({ "message": "Updated favourites successfully!" });
-
         })
         .catch(error => {
             console.error(error);

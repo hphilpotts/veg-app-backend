@@ -14,5 +14,23 @@ exports.user_favourites_get = (req, res) => {
 };
 
 exports.user_favourites_update_put = (req, res) => {
-    // todo - implement when get favs tested
-}
+    const { id, foodItem } = { ...req.body };
+    User.findById(id)
+        .then(User => {
+            const favourites = User.favourites;
+
+            if (favourites.includes(foodItem)) {
+                User.favourites = favourites.filter(item => item != foodItem);
+            } else {
+                User.favourites.push(foodItem)
+            }
+
+            User.save();
+            res.status(200).json({ "message": "Updated favourites successfully!" });
+
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(400).json({ "message": "Error updating User favourites..." });
+        });
+};
